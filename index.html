@@ -1,44 +1,75 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<html lang="pt-BR" suppresshydrationwarning="true" data-lt-installed="true"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Time de Vendas — Relação de Consultores</title>
+<title>Treinamentos — Time de Vendas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   --vinho:#5C0A10; --vermelho:#C41420; --rosa:#F8E8E9; --rosa-linha:#EFD2D4;
   --tinta:#1A1416; --grafite:#6B6065; --neutro:#EDE9EA; --ok:#1F7A5C; --ok-bg:#E3F1EB;
-  --bg:#FAF8F8; --branco:#FFFFFF; --amarelo:#F5E6B8;
+  --bg:#FAF8F8; --branco:#FFFFFF; --amarelo:#F5E6B8; --amarelo-bg:#FBF3D8; --amarelo-linha:#E0C87A;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--tinta);font-family:Inter,system-ui,sans-serif;font-size:13px}
 h1,h2,h3,.sg{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;letter-spacing:-.02em}
 .num{font-variant-numeric:tabular-nums}
 .lbl{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--grafite);font-weight:600}
-header{background:var(--branco);border-bottom:3px solid var(--vinho);padding:14px 22px;display:flex;align-items:center;gap:18px;position:sticky;top:0;z-index:20}
-header img{height:34px}
-header .ttl h1{margin:0;font-size:20px;color:var(--vinho)}
-header .ttl .sub{font-size:11px;color:var(--grafite);margin-top:2px}
-header .right{margin-left:auto;text-align:right;font-size:11px;color:var(--grafite)}
-header .right b{color:var(--tinta)}
 button,select,input{font:inherit}
 .btn{background:var(--vinho);color:#fff;border:0;border-radius:6px;padding:7px 13px;cursor:pointer;font-weight:600;font-size:12px}
 .btn.sec{background:#fff;color:var(--vinho);border:1px solid var(--vinho)}
-.btn:disabled{opacity:.5;cursor:default}
+.clk{cursor:pointer}
+.clk:hover{text-decoration:underline;text-decoration-color:var(--vermelho);text-underline-offset:2px}
 
-#status{padding:40px 22px;max-width:760px;margin:0 auto}
-#status .bar{height:8px;background:var(--neutro);border-radius:4px;overflow:hidden;margin:6px 0 14px}
-#status .bar i{display:block;height:100%;background:var(--vermelho);width:0;transition:width .3s}
-#status .src{display:flex;justify-content:space-between;font-size:12px;margin-top:10px}
-#status .err{background:var(--rosa);border-left:4px solid var(--vermelho);padding:10px 12px;margin-top:14px;font-size:12px}
+/* header */
+header{background:var(--branco);border-bottom:3px solid var(--vinho);padding:12px 22px 0;position:sticky;top:0;z-index:20}
+.hrow{display:flex;align-items:center;gap:16px}
+header img{height:34px}
+header .ttl h1{margin:0;font-size:22px;color:var(--vinho);letter-spacing:.04em}
+header .ttl .sub{font-size:11px;color:var(--grafite);margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
+header .hr{margin-left:auto;display:flex;align-items:center;gap:10px}
+.vig{display:inline-flex;align-items:center;gap:8px;background:var(--amarelo-bg);border:1px solid var(--amarelo-linha);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer}
+.vig b{font-family:"Space Grotesk";font-size:14px}
+.gear{width:38px;height:38px;border-radius:50%;border:1px solid var(--rosa-linha);background:#fff;cursor:pointer;font-size:20px;color:var(--vinho);display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.gear:hover{transform:rotate(60deg);background:var(--rosa)}
+.tabs{display:flex;gap:4px;margin-top:10px}
+.tab{padding:8px 16px;border:1px solid var(--rosa-linha);border-bottom:0;border-radius:8px 8px 0 0;background:#FBF5F5;color:var(--grafite);cursor:pointer;font-weight:600;font-size:12.5px}
+.tab.on{background:var(--vinho);color:#fff;border-color:var(--vinho)}
+
+/* loading */
+#status{position:fixed;inset:0;background:linear-gradient(160deg,#FAF8F8 0%,#F8E8E9 100%);display:flex;align-items:center;justify-content:center;z-index:90}
+#status .card{background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(92,10,16,.18);padding:34px 40px;width:min(560px,92vw);text-align:center}
+#status img{height:46px;margin-bottom:14px}
+#status h2{margin:0;color:var(--vinho);font-size:24px;letter-spacing:.06em}
+#status .sub{color:var(--grafite);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+#status .msg{margin:22px 0 8px;font-size:13px;color:var(--tinta)}
+#status .bar{height:10px;background:var(--neutro);border-radius:5px;overflow:hidden;position:relative}
+#status .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--vinho),var(--vermelho));width:0;transition:width .35s;border-radius:5px}
+#status .bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:sh 1.3s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+#status .pcts{font-family:"Space Grotesk";font-weight:700;font-size:26px;color:var(--vinho);margin-top:12px}
+#status .srcs{margin-top:18px;text-align:left}
+#status .src{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--rosa-linha);font-size:12.5px}
+#status .src .n{flex:1}
+#status .src .n small{display:block;color:var(--grafite);font-size:10.5px}
+#status .pill{font-size:10.5px;font-weight:600;letter-spacing:.05em;padding:3px 9px;border-radius:10px;background:var(--neutro);color:var(--grafite);min-width:96px;text-align:center}
+#status .pill.go{background:var(--amarelo-bg);color:#7A5A00}
+#status .pill.ok{background:var(--ok-bg);color:var(--ok)}
+#status .pill.err{background:var(--rosa);color:var(--vermelho)}
+#status .dot{width:10px;height:10px;border-radius:50%;background:var(--neutro)}
+#status .dot.go{background:var(--amarelo-linha);animation:pulse 1s infinite}
+#status .dot.ok{background:var(--ok)} #status .dot.err{background:var(--vermelho)}
+@keyframes pulse{50%{opacity:.3}}
+#status .err{background:var(--rosa);border-left:4px solid var(--vermelho);padding:10px 12px;margin-top:14px;font-size:12px;text-align:left}
 
 main{display:none;padding:14px 22px 60px}
+.view{display:none} .view.on{display:block}
 .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
-.kpi{background:var(--rosa);border-radius:8px;padding:10px 14px;border-left:4px solid var(--vinho)}
+.kpi{background:var(--rosa);border-radius:8px;padding:10px 14px;border-left:4px solid var(--vinho);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(92,10,16,.15)}
 .kpi.crit{border-left-color:var(--vermelho)}
 .kpi.ok{border-left-color:var(--ok)}
+.kpi.vg{background:var(--amarelo-bg);border-left-color:var(--amarelo-linha)}
 .kpi .v{font-family:"Space Grotesk";font-weight:700;font-size:26px;line-height:1;color:var(--vinho)}
 .kpi.crit .v{color:var(--vermelho)}
 .kpi .c{font-size:11px;color:var(--grafite);margin-top:3px}
@@ -46,125 +77,194 @@ main{display:none;padding:14px 22px 60px}
 
 .toolbar{background:var(--branco);border:1px solid var(--rosa-linha);border-radius:8px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-end;margin-bottom:12px}
 .toolbar .f{display:flex;flex-direction:column;gap:3px}
-.toolbar select,.toolbar input[type=text],.toolbar input[type=number]{border:1px solid #D8CFD1;border-radius:5px;padding:5px 8px;background:#fff;min-width:120px;font-size:12px}
+.toolbar select,.toolbar input[type=text],.toolbar input[type=number],.toolbar input[type=date]{border:1px solid #D8CFD1;border-radius:5px;padding:5px 8px;background:#fff;min-width:120px;font-size:12px}
 .toolbar input[type=number]{min-width:54px;width:54px}
-.toolbar .chk{display:flex;align-items:center;gap:5px;font-size:12px;padding-bottom:6px}
-.legend{display:flex;gap:16px;align-items:center;font-size:12px;margin:0 0 8px;color:var(--grafite)}
+.legend{display:flex;gap:16px;align-items:center;font-size:12px;margin:0 0 8px;color:var(--grafite);flex-wrap:wrap}
 .legend i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:5px}
 .legend .cnt{margin-left:auto}
 
-.tblwrap{background:var(--branco);border:1px solid var(--rosa-linha);border-radius:8px;overflow:auto;max-height:calc(100vh - 150px)}
+.tblwrap{background:var(--branco);border:1px solid var(--rosa-linha);border-radius:8px;overflow:auto;max-height:calc(100vh - 170px)}
 table{border-collapse:separate;border-spacing:0;width:100%;font-size:12px}
 thead th{position:sticky;top:0;background:#fff;z-index:5;border-bottom:2px solid var(--vinho);padding:7px 6px;text-align:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--grafite);font-weight:600;white-space:nowrap;cursor:pointer;user-select:none}
 thead th.l{text-align:left}
 thead th.mon{background:var(--rosa)}
+thead th.cur{background:var(--amarelo)}
 thead th.sorted{color:var(--vinho)}
 thead th .arr{font-size:9px}
 tbody td{padding:4px 6px;border-bottom:1px solid var(--rosa-linha);white-space:nowrap;text-align:center;vertical-align:middle}
 tbody td.l{text-align:left}
 tbody tr:hover td{background:#FDF5F5}
 tbody tr{cursor:pointer}
+tbody tr.risk td{background:#FDF1F2}
 tbody td.ap{font-family:"Space Grotesk";font-weight:700;font-size:12.5px}
-tbody td.ap .nm{display:block;font-family:Inter;font-weight:400;font-size:10px;color:var(--grafite);max-width:190px;overflow:hidden;text-overflow:ellipsis}
+tbody td.ap .nm{display:block;font-family:Inter;font-weight:400;font-size:10px;color:var(--grafite);max-width:200px;overflow:hidden;text-overflow:ellipsis}
 td.m{width:38px;min-width:38px;font-weight:600;padding:0 2px}
 td.m span{display:block;margin:2px 0;padding:3px 0;border-radius:3px;min-width:30px}
 td.m .lo{background:var(--vermelho);color:#fff}
 td.m .hi{background:var(--ok);color:#fff}
 td.m .mid{background:#fff;color:var(--tinta);border:1px solid #D8CFD1}
 td.m .na{background:repeating-linear-gradient(135deg,#F1EDEE 0 3px,#fff 3px 6px);color:transparent}
+td.m .cur{background:var(--amarelo-bg);color:var(--tinta);border:1px solid var(--amarelo-linha)}
+td.m .soft{background:var(--rosa);border:1px solid var(--rosa-linha);color:var(--vinho)}
+td.m .zero{background:#fff;border:1px solid var(--rosa-linha);color:var(--grafite)}
 td.tot{font-family:"Space Grotesk";font-weight:700;font-size:13px;color:var(--vinho)}
-td.est b{font-family:"Space Grotesk";font-weight:700}
-td.est .pre{color:var(--vinho)} td.est .vd{color:var(--ok)}
 .badge{display:inline-block;padding:1px 6px;border-radius:9px;font-size:9.5px;font-weight:600;letter-spacing:.04em}
 .badge.at{background:var(--ok-bg);color:var(--ok)} .badge.in{background:var(--neutro);color:var(--grafite)} .badge.pd{background:var(--amarelo);color:#7A5A00}
 .badge.warn{background:var(--rosa);color:var(--vermelho)}
 .dim{color:var(--grafite);font-size:11px}
 .alert{color:var(--vermelho);font-weight:600}
+.okt{color:var(--ok);font-weight:600}
 .func{font-size:11px}
 tbody td.sm{font-size:11px}
-.pos{display:inline-block;width:20px;height:20px;line-height:20px;border-radius:50%;background:var(--vinho);color:#fff;font-size:10px;font-weight:700;font-family:"Space Grotesk"}
-.pos.p1{background:var(--vermelho)}
-.pos.p0{background:transparent;color:var(--grafite)}
+.stk{position:sticky;background:#fff;z-index:3}
+thead .stk{z-index:6}
+tbody tr:hover td.stk{background:#FDF5F5}
+tbody tr.risk td.stk{background:#FDF1F2}
+.s0{left:0;min-width:36px} .s1{left:36px;min-width:92px} .s2{left:128px;min-width:104px} .s3{left:232px;min-width:200px;box-shadow:2px 0 0 var(--rosa-linha)}
+.c0{left:0;min-width:36px} .c1{left:36px;min-width:210px;box-shadow:2px 0 0 var(--rosa-linha)}
+tfoot td{position:sticky;bottom:0;background:var(--rosa);border-top:2px solid var(--vinho);font-weight:600;padding:5px 6px;text-align:center;white-space:nowrap;font-size:11.5px;z-index:4}
+tfoot td.l{text-align:left} tfoot td.stk{background:var(--rosa);z-index:5}
+.bar{display:inline-block;height:8px;background:var(--vinho);border-radius:2px;vertical-align:middle}
+.bar.red{background:var(--vermelho)} .bar.ok{background:var(--ok)}
+.sec2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.card{background:#fff;border:1px solid var(--rosa-linha);border-radius:8px;padding:12px 14px}
+.card h3{margin:0 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);font-family:Inter;font-weight:600}
+.card table th{position:static;cursor:default;font-size:9.5px} .card table td{padding:3px 6px;font-size:11.5px}
+.card .note{font-size:11px;color:var(--grafite);margin-top:6px;line-height:1.45}
+.foot{margin-top:18px;font-size:11px;color:var(--grafite);line-height:1.55;max-width:1150px}
+.foot b{color:var(--tinta)}
 
-/* drawer */
-#ov{display:none;position:fixed;inset:0;background:rgba(26,20,22,.35);z-index:50}
-#dr{position:fixed;top:0;right:0;height:100%;width:min(760px,100%);background:#fff;z-index:60;transform:translateX(100%);transition:transform .25s;overflow:auto;box-shadow:-6px 0 20px rgba(0,0,0,.15)}
-#dr.open{transform:none}
-#dr .hd{padding:16px 20px;border-bottom:3px solid var(--vinho);display:flex;align-items:flex-start;gap:14px;position:sticky;top:0;background:#fff}
-#dr .hd h2{margin:0;font-size:22px;color:var(--vinho)}
-#dr .hd .x{margin-left:auto;background:none;border:0;font-size:22px;cursor:pointer;color:var(--grafite)}
-#dr section{padding:14px 20px;border-bottom:1px solid var(--rosa-linha)}
-#dr h3{margin:0 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);font-family:Inter;font-weight:600}
+/* modal (fichas, listas, configurações) */
+#mov{display:none;position:fixed;inset:0;background:rgba(26,20,22,.45);z-index:60;align-items:flex-start;justify-content:center;padding:28px 16px;overflow:auto}
+#mov.on{display:flex}
+#mbox{background:#fff;border-radius:12px;width:min(1120px,96vw);max-height:calc(100vh - 56px);overflow-y:auto;overflow-x:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#mbox.narrow{width:min(620px,96vw)}
+#mbox .hd{padding:14px 20px;border-bottom:3px solid var(--vinho);display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:2}
+#mbox .hd h2{margin:0;font-size:20px;color:var(--vinho)}
+#mbox .hd .sub{font-size:11.5px;color:var(--grafite);margin-top:2px}
+#mbox .hd .acts{margin-left:auto;display:flex;gap:6px;align-items:center}
+#mbox .x{background:none;border:0;font-size:24px;cursor:pointer;color:var(--grafite);line-height:1}
+#mbox section{padding:12px 20px;border-bottom:1px solid var(--rosa-linha)}
+#mbox h3{margin:0 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--grafite);font-family:Inter;font-weight:600}
+#mbox table{table-layout:auto}
+#mbox tbody td,#mbox thead th{white-space:normal;word-break:break-word}
+#mbox thead th{position:static}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.mini{background:var(--rosa);border-radius:6px;padding:8px 10px}
+.mini{background:var(--rosa);border-radius:6px;padding:8px 10px;cursor:default}
+.mini.clk{cursor:pointer} .mini.clk:hover{text-decoration:none;box-shadow:0 4px 12px rgba(92,10,16,.15)}
 .mini .v{font-family:"Space Grotesk";font-weight:700;font-size:20px;color:var(--vinho)}
 .mini .l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--grafite);margin-top:2px}
-.tl{display:grid;grid-template-columns:130px 1fr;gap:4px 12px;font-size:12px}
+.tl{display:grid;grid-template-columns:160px 1fr;gap:4px 12px;font-size:12px}
 .tl .k{color:var(--grafite)}
-.hist{white-space:pre-wrap;font-size:11.5px;line-height:1.5;background:#FAF8F8;border-left:3px solid var(--rosa-linha);padding:8px 10px;max-height:180px;overflow:auto}
+.hist{white-space:pre-wrap;font-size:11.5px;line-height:1.5;background:#FAF8F8;border-left:3px solid var(--rosa-linha);padding:8px 10px;max-height:160px;overflow:auto}
 .mons{display:flex;flex-wrap:wrap;gap:3px}
 .mons div{width:44px;text-align:center;font-size:10px;border-radius:4px;padding:3px 0}
 .mons div b{display:block;font-family:"Space Grotesk";font-size:13px}
-table.sl{font-size:11.5px} table.sl th{position:static;cursor:default;font-size:9.5px} table.sl td{padding:3px 6px;text-align:left}
-.foot{margin-top:18px;font-size:11px;color:var(--grafite);line-height:1.55;max-width:1100px}
-.foot b{color:var(--tinta)}
-@media (max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}}
+table.sl{font-size:11.5px} table.sl th{font-size:9.5px;text-align:left;padding:5px 6px} table.sl td{padding:4px 6px;text-align:left;vertical-align:top}
+table.sl tr.clk:hover td{background:#FDF5F5}
+table.sl td.num,table.sl th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.sl td.ctr,table.sl th.ctr{text-align:center}
+table.kv{width:100%} table.kv td{padding:4px 6px;border-bottom:1px solid var(--rosa-linha);font-size:11.5px;vertical-align:middle}
+table.kv td.k{text-align:left} table.kv td.v{text-align:right;width:110px;white-space:nowrap;font-variant-numeric:tabular-nums} table.kv td.b{width:170px;padding-left:10px}
+table.kv td.b .bar{display:block}
+.card table.sl th{text-align:center} .card table.sl th:first-child,.card table.sl td:first-child{text-align:left} .card table.sl td{text-align:center;font-variant-numeric:tabular-nums}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.two > div{padding:12px 20px;border-right:1px solid var(--rosa-linha)} .two > div:last-child{border-right:0}
+.two h3 b{color:var(--vinho);font-size:14px;font-family:"Space Grotesk"}
+.cfgrow{display:grid;grid-template-columns:150px 1fr;gap:8px 12px;align-items:center}
+.cfgrow input,.cfgrow select{border:1px solid #D8CFD1;border-radius:5px;padding:6px 8px;font-size:13px}
+.info{background:#FAF8F8;border-left:3px solid var(--rosa-linha);padding:8px 10px;font-size:11.5px;line-height:1.5;margin-top:10px}
+.info .w{color:var(--vermelho);font-weight:600}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(3,1fr)}.sec2,.two,.grid4{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-<body>
+<body cz-shortcut-listen="true">
 <header>
-  <img id="logo" alt="Metrocasa">
-  <div class="ttl">
-    <h1>Relação de Consultores — Time de Vendas</h1>
-    <div class="sub">Estrutura ao vivo (ETV) cruzada com vendas validadas (histórico) e esteira do mês (base atual) · Operações — Pedro Aquino</div>
-  </div>
-  <div class="right">
-    <div>Dados carregados: <b id="loadedAt">—</b></div>
-    <div id="srcInfo">—</div>
-    <div style="margin-top:6px;display:flex;gap:6px;justify-content:flex-end">
-      <button class="btn sec" id="btnCsv">Exportar CSV</button>
-      <button class="btn" id="btnReload">Atualizar</button>
+  <div class="hrow">
+    <img id="logo" alt="Metrocasa" src="data:image/png;base64,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">
+    <div class="ttl"><h1>TREINAMENTOS</h1><div class="sub">Operações — Pedro Aquino</div></div>
+    <div class="hr">
+      <div class="vig" id="vigBtn" title="Mês vigente e semana configurados. Clique para alterar.">Mês vigente <b id="vigMes">—</b> · Semana <b id="vigSem">—</b></div>
+      <button class="gear" id="gearBtn" title="Configurações, fontes de dados, exportar, atualizar">⚙</button>
     </div>
   </div>
+  <div class="tabs"><div class="tab on" data-v="cons">Consultores</div><div class="tab" data-v="cad">Cadeia: gerentes, superintendentes, diretores e turnover</div></div>
 </header>
 
-<div id="status">
-  <h2 style="margin:0 0 4px;color:var(--vinho)">Carregando dados ao vivo…</h2>
-  <div class="dim">As três planilhas são lidas direto do Google Sheets publicado. O histórico tem ~35 MB, leva alguns segundos.</div>
-  <div class="bar"><i id="pbar"></i></div>
-  <div class="src"><span>ETV (estrutura)</span><span id="s_etv">aguardando</span></div>
-  <div class="src"><span>Histórico de vendas</span><span id="s_hist">aguardando</span></div>
-  <div class="src"><span>Base atual (esteira)</span><span id="s_base">aguardando</span></div>
+<div id="status"><div class="card">
+  <img id="logo2" alt="Metrocasa" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjgAAAD6CAYAAACsyj1gAAAo90lEQVR4nO2dzXEbx9OHFy7djfeEoyAU7oYiMBiBqQhERiAxAooRUIqAVASiIyAVAaE7i4KPezL/EeCthnrpFQTs58zO9O7zVKH8IYrY+diZ33T3dI8SAIAd0tn8MkmS94475s5zR3+dPD588PwdAGCEUegHAIA4SGfz4yRJ1pPHh1U6m4+TJLlPkmSa2OK1PH/ohwCA8PwW+gEAIDwqaK70k0weH56SJDlL7LF9fgAABA4AZMJARM4inc23rqnJ48NNkiTyscTz8wPAsMFFBTBw0tl8mSTJbe5/PamrZ62Wne8qfqzw/PyhHwQAwoEFB2DA5FxTecY7rqqLxBb72gQAAwOBAzBszg8EEi816FhEzscObkC55vn5AWCY4KICGCh7XFO7iPXmlVhx0tl8obeqLPH8/KEfBAC6BwsOwHCRXDdlrp7tz+jVa4uuKrFQAcAAwYIDMEDS2fxDjc3/aPL4sHVRpbP5d4O5cZ6fHwCGAxYcgIGh7qY6lo0rDUYWThN7EHAMMEAQOADDo+6GLxabLDeOWEIk6NgSU7VYAcCAwEUFMCA0CV5Z7E1hGQSjuXESDTgmNw7AQMCCAzAQ0tl82jLoNp8bB1cVAEQNAgdgeOUYmmK9jIPkxqGMA8BAwEUFMABauqaSA2Ucppobx5Kritw4AAMBCw5Az9GYGVf5YPK5cdZGc+NwqwpgACBwAPpPW9fULsfGyzgcaxZnAOgxCByAHqNCxEdNpnxunLPEHvnnB4AegsABGFalcFc8u72MlnFoe6MMACKHIGOAnpLO5iJuTjx/jfUyDtvcPqEfAgDcgwUHoIdojIlvcZPsWIjIjQMA0YDAAegZnl1TB8sgqCXnOrHFc24fAOgXCByA/nHesavoXAt4ZgHHkmvGEvL81lxrAFACAgegR6jQCGGRuDRcxoHcOAA9BIED0C+uQpdB0DIO1nLjyPP7uE4PAIFA4AD0BI2FyVxFoV09pwZdVeTGAegRCByA/rimQud16UMZh9B9CACOQOAA9AMXhTR9lHGwlmPmPWUcAPoBAgfAOBr7sozU1WMt4DgmsQgALUDgABhGY15ic6tYL+OwyHL7AIBdEDgAtnFdKdyHq0dcVRKTYwly4wAYB4EDYJR0Nj+JzDXVp9w4Ia/cA4ADEDgABtEYl0srrh6jZRwkN04X9bwAwAMIHACbxOqaKnL1WCzjcJkLmAYAQyBwAIyh17CPrbl6jLqqKOMAYJRR6AcAgOqoNeG7EetNnjPNiyNtuI08dmgfR+pmAwAjYMEBsMW5QXGTuaryuXGsuaoo4wBgDAQOgBH02nWISuEuWKuLKivj8CmxxdRw3wMMElxUAAZQ68e9brQW+cXFk87m94GLgzbhtSYvBIDIwYIDYIP3hsXNxwPxK9YCjgVy4wAYAYEDEDmRVApvysGq4moJ2QYeG0Jy++CqAjAAAgcgfixbDU6z2JsDiPihjAMAOAeBAxAxmgnYWpxKxnXZ1WrDuXFizyINMHgIMgaIFM0ALDlvLCLC5VWJ9eaZdDb/Yix5ofBm8vhwE/ohAGA/WHAA4qXPrqlffp7cOADgEgQOQIRoIKu1bL8ZN3UtGyqGpFaVNVeV1eBvgN6DiwogTtfUvdGMxbVcU7tQxgEAXIEFByA+rFQK38dFU3Fj2FVFwDFAhCBwAOKrFG7VNXWXFdRsitEyDgu97QYAEYGLCiASDFcKT9TqImUMnOS0MVrGQVxz1nL6APQWLDgA8WDZNfXJ8eZuLTeO9VtvAL0DgQMQj2vKWh6YjNXk8cGpi8ZoGYdlOpufhH4IAPgBAgcgDteU5UBVX9YWi2UcLnU8ASAwCByA8JwbrhR+odYW5xjOjWNZrAL0BoKMAQKSzuZyY+rW6CCsJ48Pr3x/idEyDkdldbgAwC9YcADCYjkwtatAYIu5ca5wVQGEBYEDEAjNnWLVNfWxKwuFuqokHscSMq5SbgMAAoGLCiAA6WwuOV4k14tF1przplOritEyDq99xSgBQDFYcADCYNo11bW4yb43sQcBxwCBQOAAhHFNWcvSm68UHiR4VhMJXhjMjYOrCiAAuKgAOmTIlcJdYbCMg9MyFgBQDSw4AN1iuRxDKNfULuTGAYBSEDgAHaGuCmtBsnnX1E0SAeois1bG4VjLcQBAR+CiAuiAHrimonKxaI6Ze2PX7IPcPgMYKlhwALq7TWNR3GTlGKIRN4bLOEy1LAcAdAAWHADPqGtCyg1Y5G7y+HCURAplHADgEFhwAPy7UkznvEnixmIZB3LjAHQAAgfAL7imPGK0jMNCcyEBgEdwUQF4wnil8NXk8eF1YgSDZRyiC9wG6BtYcAA8gGuqc6wFHFt3XQJEDwIHwA/nxq4w796aMlUgUp/XYhmHk9APAdBXcFEBOIZK4eFIZ/PvxoRlFOUvAPrIi9APANA31JowMhoztDa+2b6RrMGJHV7q816HfhAAAAAAAIgcc6dMgCGjMRu7Lhi5ibPu+IaVZSsPAAwAXFQAtvgrAheMZDaWgpfB0DwyocsevImlACkA/Aq3qABs8S30A0QSxPtn6AcwmEEZYFAgcABsEdRyEpHACf4Mk8eHGMYCAA6AwAGwRQyZb2OwnoQWOKbyBAEMEQQOgCE0tf/TkMWFXmcPDQIHIHIQOAD2WA3cehL6+2OJhQKAAhA4APb4Gkm25lD8kYQntMgEgBIQOAD2iCEOJ6QVJaS42kKAMUD8IHAA7BGD9WAxYIETQ/8DQAkIHABjRFLpO4ibKJ3Nx0mSyCckMfQ/AJSAwAGwSegcLOOBWm8EAowBDIDAAbBJ6Dic5YAFDhYcAAMgcABsEtyKkM7mIQKNXyaBIcAYwAYIHACbxGBFmA7QghNDvwNABRA4AAaJxIqwHKDACe0aBICKIHAA7BJ6s/19gDeogrsGAaAaCBwAu4R2lywGZr0RYrCcAUAFEDgAdgltTRiiwAktKgGgIggcALuEtiaM1W00lBtU68njQ+hK7gBQEQQOgF1Cx+B0bVUJbcHBegNgCAQOgFEmjw8icJ4GdFV8MXCXIADUAIEDYJvVEAROJDeoQrsEAaAGCBwA23wN/P1/DsR6E4OYBIAaIHAAbLMeiIsqVO2rDAKMAYyBwAGwzWogAuflwPsZAGqCwAEwzOTxIfjGm87mi57WvcpDgDGAMRA4APYJHfw6HYCLKnQfA0BNEDgA9gkdh+PVgpPO5qGtN0JwSxkA1AOBA2Cf0O6TPzz//tAChwBjAIMgcADsE9q6MO65eyp0/wJAAxA4APYJvQEve36DKrSFDAAagMABMI4WgAwah+M5Tia0i4oAYwCDIHAA+kFoK45PEYKLCgBqg8AB6Aeh3SjLnt6gIsAYwCgIHIB+ENqC4ytOZjrwfgWAhiBwAPpB6I142lP3VGjLGAA0BIED0AMmjw8SZCzBxn1L9hf6BhUBxgBGQeAA9IeQVpxxOpv7yIeDiwoAGoHAAegPod1Ui565qAgwBjAMAgegP3zrk8CJ4AZVaMEIAC1A4AD0h1XgOJyxpSKeBgQjALTgRZu/DADxMHl8EIHzf+lsLsJAPn/qP7sSCvJ91gXOWgOLRdxcB/h+AHAEAgegn0JnlW3QGvy7zIkeX3EtU2NVyp+0n76qqFlp2QsA6AGj0A8AAN2TzuZ5wbNwJU4mjw/O1pR0Nr93bMVZ5awzImaIsQHoMQgcAMgCepdqNcnETxOOJo8PTnLHpLP5pqWraaVi5s7VMwGAHXBRAUCWKPA55kTdWgsVO3XcWk4CjTWOqA53OXeTWGeCVlcHgPAgcADgFzQWRUTD3Y7oyFt59rm15GduHHTptGIgsFhncDUBwC8gcACgbvBy3q2VD1xeOAwMziw4BAIDAABAWBq4lg79nqmr3wUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC2hmjj0glxxyET/Kf/9e+7/nVGzCABgOFCLCqJHU/aLYJnmijBK/aNk5/95r3INAAA2QOBAlKSz+X3O+gIAAFCL3+r9OEBnIG4AAKAxCBwAAADoHQgcAAAA6B0IHAAAAOgdCBwAAADoHQgcAAAA6B0IHAAAAOgdCBwAAADoHQgcAAAA6B0IHAAAAOgdLwLXFlru/NFaPpPHh7sOvjtfnFF4SpJkJf/i8/tDkM7mu/0sPFF8EgAA+soL3fz2bYB1WE0eH26KfiCdzU+SJPlLv6uw8GE6m8s/RGT8nSTJ9eTxQcRHI9LZ/FgLMy6rpv/X719nz1DWtoiqaWdt/LNKEUptZ6LCTtr7Tdu8atPn4I90Np/qGB+ay1GO3061910Q2wDgnFE6m39IkuS85e+RBfX1gUXtfZIk71pUc5aF+lOSJB+rLtq6CZy0/N48svl/rvMMXaDtFAH31kPtpkxg3kweH6T9zlCxu098PVvRkiS5dfmdSZKc5X53FSqJhIK21O3rg5t8bj6/rfFdK/29n1yPXxH6rCK0/9A5WbXae4Y8szzvP/LvfbCmqtU4E6Yvd/pjmbde5/79Hx3DVZfjVwc9HBcJ106s8jGi70HpvB9av1gVOML/5TcEtZxcORIY2Yvypsit4khQFSHtO5s8PlwnAdG+fefA8laVG90onbyM6Wx+2+GzN+WoSnsdtkU286MD87nt+yntuPC1mOoGLuLr2IHYOzT/MrEdzQGjwsEjsxyPHax90gdfQ1qTc+3KLPF1WeWs8uu24qAia58CsYnlvETYb63osYYPpD/e9aUK9UzY7s4FefYn/WTtubMucN5kL186m1/pidMHp/sEhnb8F08L7C43+hxPAYTNZUdt9LZRInD2M3l8GO3M5yvHljln8zYnvupYlaIT2y5Ra95bz+K9c2uytuud47l4cC1xvD7Id8ge5wyd+/mQCx88ZaI2tLBPf+w70tbjlmJd2vO5SKTr2OfJrJlNuHYpcOSFO/MsbvaKHH0B5Xu7ZKWnfO8TT080VxFZPVptlAicg7yWk5uKm1uPVsg3TQVCB1bSKKxSRvrjWi3KXtYgXVfPPQvYX9aSdDb/12FfOhM4ug6fd7C/HRI7n7uc76m/8V/rvL3Z4/J0GZpwJNfEf3f0yxYdiRvhUjeBUOJG2G5CusB5I53NZfH8HpG4SVTJfz9wOwvavUNTj+Im0d8r8/akxVw8DyxuhO1iKGJZ+6xztA/vA/bHib6Hri0UUz2EyLo67WAtuc+t59kN12iQZ9K97XsAcSNkFqNsvi99W2zS2fy7x/GX3/klnc3lkx9r19+1+s2h2XHZ4eBLp1wFFDcZmVvM10v1RV1SMZJtlLLpgRskMPdLRwv8VYMN7zK2zUfXnfsu52HHAqAMGY/zdDZ/FgkO3BEi2ro8vGxFvT6/68sSLvojlLApE/YLT3vOl47mtfRtvh2y/jlDrIKWE/1lMQqhWbpeXFXV3uoEiB2xpsUwDn3gfYcL/EXEG15dxjoPd0+Ezom4PzKLcuONWC1BXQnsXcb63dH0q/ZlqP6oKuxl3rd+vvSHyPgeYM/ZGglK0kg0xrLAiQk5QU0di5uoTjIlnMiLFvohoJZP/6PxBb7oROjleQ30R2bZrn3g0kOKi1jMNmQxLsGJwDtQFRnrS0eu1nEShswtj8CJlK2ZeKDiJuN9m9MjdEppYKqhBb6T2DgVAFb6Q071lTe9DmMnTWBs7j9VtcZG3taswoBTsOC4tWK0teK4vhbcNXJ6tPz8Q2BdlscpokUvCpGjFhFLAuBJr5KXomNtqW1e0TX80thhpVGen/RHsLLl97wUBI5b5Kpom0XUQsxNGb1+YXrAadEfqkC1tMB7jdFTAXBpTNwcVUkUl8u1BP8Rww3Bqtw0TTqb/pc3rtcgcNxyMpBTQ9lVZ6fXVsEZhRlF1eIRc4xJXY7bXAAw+F7WETfZWMOvJVEssC47rJTgsspAtCBw3CLX7JrcAujbKeqd79ss0IiyBdF3UrdQ8SjTgWwCZzVS/L/v4VgHs8AHoE2i1Q/GQyEqg8Bxj6S0royjau5VCy9+1IC0bcVpj9+XZXeFeKhS/6evY3bV0DUVzZXlpiVsSjLyws9YCRFonME7HdjYvwj9AD2krjL2NdnWKmYK65h4LNwpvxNXVRxsi8SW/EyfFz3JVbWsuimo9fGyj+JmAGPdCMcFPn0i1eXbrKtXyYDoSuDIZnunRbNe6mZqYTI1YdmgMqvza4OTx4fSPCeC1gO5UUuSy/gLcdcdh6x+DM98KhG5lmIPmiKbetVT73tDrqmzOuJmIGPdBAv70baOXNO/nHbjLRiUwNmeHA9U/85uJ4w7eAb5/r/lBJcrb3/uyw8pwqWiL/xdqCDDXbRvXmnCp6lDd90+gXNWYdxdFl1LGuSKaHT10jMyvqua+SPWFU58XcUerPSTrw78p68cGHusONOKV2qlIngX3Gm16DxSG7Dqwee66kEmB+JmP742/u3eo+9unsxi9IeO97Sipa7NuvQ2GRg+Bc5aN9u9AyKiJ53NnzxH8t9p5eTnyaX/nlktfCW4ksm6CuDzlRegcWyN9E06m79RkeOC432BrWXP6CNA2VVF4UBcqxVmVXAqz1yN0wbC7qSDA8ankhggX67SPO/KXHX6HD5P81Vdx1mBxX1jmomb0wg3uecDpbpT8lXCpzq+fxmKd2nDUU236LEKfvnneM94N7aGp//Npy5Y5Q5jMuby3UFcgD4FzpsytSkDls7mK0+WFHm5jkp+5syTu0zac1PBPTV23N7W7iDZRNPZ/MbRAjSuYc3KM4gI/wqsqohWfc/kJP9Rr0VnuTzuKiT127eYumJVZR3YcZUee7y9dFwhFqnWJYGaXFQV2ioMZDyvdTzftxU3uub43GREuH08JNx0Hkh7rnNX8PsqdFZ1AoG1z7Z9I++8ejje6v60rjBvyzhJ/CLP/6noMkPOPfquKxewL4FzXWNT++xpQ3tT0WJxESjwyvWLLcKk9un3wEv4zeHzLTzf2OorKz0B1roKKi4LFahfKlpv5MTog0absB561uqidL0ITiu4qY4jCQTeouN/ls7m33SdEtHaNP/JW5+xITU3dBmDNz3Iml2UD6yqS/QXdK5c65r+1PRKeEfC/bpK+Rftiw/pbP5Rx/zYqsCpE++w6vpK7A43Hl4wCaTuemNplHI9nc0Tz1gI3utVngud+68r/rgPl9CqzYlTrYhvPMRhJbqofuzIqtooELjApb9uuV76cv/VEjd72mXt1lpVpEr2RRvLetN+zZP+F3cahXDXdU3E7aXv1BQvPJnm1jWDW10/w9ca3//kwU1WZVMfihumitiD5hbQtnixnrY9ceq6cOHhSrMEdR7CxyZw1yAQ2Ndmt4gpJ8uO1fGvwDd87jzMtW05BN3f7g7sUWu9CNBayBSw9PR7P7YR7pPHhzPfsUE+BE4Mt0/qPkNb818TrFxDbQsWnPqIL9s7DbNuu7SelvHRg79+2lD8NKVNOv3Yx7rKDb06/fQ9CYfvA8Wy6L9VBGXpVL6qMHb1Hi0SP2PfNi7IZxyst0zG4isOimc1HOtiA/3gqUPrjQ+RXfc6fpXAS5cUvXuuF1mXm1RbpjELce2nYDmzdK6FjhXMgnAlZOJ7Opvfy6UBB7dKfcTZnTnsd2drxi6UagCIiy4X2UVI93SNSwhdsTT87CEEjmvxKVfLQxL6+/e9n5cqdj60EDpTD9Ybl2LUm7BF4ADERehTZBucW059WLM0mLgL7nocC/dTjpue9JeTWCkPjDU+SITO+wgEzo3LX6bzyMvYI3AA4uJ/iV3yGYpdcmcx/i0i95SPTW7Vt/7y7S5xwPa2WTqb3/pIhurjEk/g34nAARgwzk/1iVE0CVmfrBFWxew6AitO6Geo4kq9rTJnUz/WSh+XcrysHVhwwDdmN70BMJSbfFXgtl8cxGDFeRPoZm2TK+hl7/DYyCUeL/2NwAHfWHa59B3XNx4tC6bYT+1DIfgc0rgvJ7eEuhA5oR8iZhA44BssOMPBV/Cu96BgD/EffU8FIVXPfRBFAlRNYHdkwJKz1HIXsAcEThhif2lcwsl4ODjPt6FxBmOLebI8xPXExKLv/aXz5LWBeCoJPB53tdekfvK4eTkQIHAC0GEit+AMqa0GcW618HC7w3K16ZiefWXA0hJTfz1b9iaPD0fqsor1YDo+1HcTP+vv1EpJH1/FNqHa5jJ1XBPGVdr0tqewrF2xLgjgz7p27DgBnJRqcEnRgu+6Jt27iHKruI6FG6ez+bHjhG8+K14nDuplybw+0XGNytqkleJdJ14sstReWxC3WHDC4VpZvwucGyF/4rnTD9abuFl1bC6vhcYWOM/C2vDPmjCNKD5i7WlTden2iDpuSW5YidCZPD680ptW1xG54Iv6bh2zGNF3xMvehcAJh+vERmPfEfVaFyWKIEDr/v0Y0Cuxax/JyNr+EhVJrX9PzffumyfB52TuybuXzuaXMVnrHMZj+Bjrxki7isZNLFeTx4dTFTuv1YV1HTJep2As1h6sdy6Fu+sq7s8gcMLh40WQl7JKboQmC+utLkK3RkVOLCfpIczDkzYLoM7fW0+nuruO+2J78Gj7Tuo7J30ihwwpxhhLYPWVg7bJurKIzEpZuQaUWKrVsiOC52jy+DCSjwqfI/2capZknwJoYc1Sm/4oPeHt8InACYS6b3zFQEgV2hNHwkYW0/ucCXTsYlErwUfsjrjwChdRaZMuaBYFXGwFBmWOXLbYyH2MgbhPy2JwfLDQzbKRtUPmpL6D45yArC1yPG2usjk1Lh2gG1yT+kre1hIdp0XOutBoPVXhk7nrryVGUgOWX3kqMDnu0DI5busx0H72arlD4ITFV7XhqW4wsqie1Fl8VNTIKVEWVPnse7G3m5AvkeMpdmdrFdjXH2qO3p7YdEGL7jaHR+48BoO/1zlY2p+ZuNQ550tg3lRw2fmqbJzNvy9VhI72x7b/Dpjwm4gcL/V+cutB5XHT9n2JzTWlnLtaTwviFLvMlnzn6fc29hioYPSepJBbVGG59ul/zF5MfTlFNKy0hkwWe7HIJe1a6KfqZF3o75YX1QrjXH+U3eYIfiOtC2RTT2fzG48uPJmDsgiudaGV0+QqNx4LvZWxjORA8bdngXussStZf8j7uNZP1gdV+0M2Wwl8rZp198bjerNQS4esaZ8PucQ0riW7iRT8UsSB51uWrKfinpG+/NTyMPbURR9MHh/WOt+mnuazHIrFPVcqpFQMnXu22j2DwAmITrzs6qFvMgHjElmor8T3nLjnLuCtCnlhx3qiL6MPwcufO5iD2cYWiqq3+m7UqjA20h9i5fmmmXcLkfZ73OgyTjLhlROy2XfmU0jEShUBOM61MxOqX3WOVQo7UGtll31x41FUZG7Kla4lP71rKmqWenA87lLYInD8UMcUfGE8APZEF1jX+T5CX7+sms8l9gW7FDl5pbN5SEHZBfKexWDR8sHWIllF5OgG5NNqnJFtambIWZfqkP2d7d9Ty/BdwT7wUvul63XjUwdWk+dDdImFvDOIwQmMKv5YkoE1RUy2rjcEX/ECwcoO9EEAGGUb6Nnzvriq+A5aX2t84moNy3L6nO/5+MjtlHFXss/cJQMDgRMHFxFYLFwssC5dYKFfxiEFGmfXiLvKhNo1ZwM5dJSKHHW79nWcG6NuFNdZs7tmFehSS7QgcCJAFx0fcSxd4yxHjm4yITMhjwd2XTyJvN5OmxImqwEdOqocNPo4zm3xlk23I+RKeuGYTn64MC3O6cYgcOI6QVsXOdlV2LFDv3FIhmbFeTJ2K66Ka+rDAA8dhQcNbZtFN5xP3g0kn9VpMiAQOBGhCtu6+dhliv2bwCfNaIv/+aInQltYtRVr2hcXhg8aRSLnYwRu4CjwVPOsa65rzOmbZCAgcCJDr1xfG99YasU8lJw0Q1px5Lq49YWvqdC2uLFnbK0vFa/5F6IWoOueHjRkrcFVZd96I1mS67ieTocy7giceEXOqdEX7bWLjWVngwkZi2Pqqqvjfrc4B2WuSD2g1cAPHTdlFizdFKV0wGDZKctgkacGQfRPQxl3HwIn5GbUt1P0ayNBYdvYDU8J/0KfOAbnptqZg5ZOe87FjVGRI4HV8j6Wjpv2lUUh64oucgL5pJGlcjKQcfchcKwshtGjk/B15FdWZdF/NXl8uPHcD0eB5tYgLTg7IufIwMHlwrX1sMCyGusat7XI1A2s1jHusjZSEV2LyBja3Ebc3Dg4wPRa4AwuxsASsmBrrZlXkQUFZsLGSaxDxCJHrosPXeTIFdTXkcblZFabDx1bVmN6FxM9BInAa/RculEeBbYYn3adq0WLXr4xYinPI+vudY+stNeO36nt70LgGEEr0B6p0AllKn/aETbrQBatLjcXawufN1REhJx/u+Mic7Dxpu7gXTyNYH5I26UPztoeNAJajDMXt8TwdS4cVdxlAj70Rl+5r3pkpb1W6+hXH7WoXE+oJhOkyTMM8lStouI0nc3PNE9LVsDMJzeaZ+GmC2tNlcBIvdp57tECudJqwTFs5jHOvwvt/06L56mguIhhXLK0DjoX33UcrLq9wu5aEOj7fZbO5n/r+C47WFt2rcCdVNnOo9//IZ3NRdxl4xmbd2NfXzlh8qMQ65HWq+oqLmmbjylXx9B5u0aufyGEQd0oS62h1KZqb1YFOKuOG5sp/id0c3El8qTd0t7PVQNV09n8NnHL5xg276poUkffQnuti3vlcQmB5p15q/0w9WhB7awfdF1552FsDwo0fadcCaujpmuYtj0bz5BZjr2I2UNoaoysbpYv5H0Wq+N6p79draeydx0hcHqMLrhj/SxKBE2WBKoPIu9lboPZXSjlhcpeKmn3/3QBKU11DpXG4FjnmgjtbP7VZaVjlInsaEVNybuXHTgWLQRPJrq/+gzkryhkT7Q9xy3a8ndZ3pZ0Nr90WPm6scDZs7aIiO/qWnkm6sWKHMQNmv4QOu8cC/ZrbdPqwPd9d/Q9CBwA8E8uSPuQZVEWOxGXTxbFTIN+KLNObEV4zAcOFXCZcPvjgJCVdvyTibS+HCBU7GUC9g/tg7aiJ6u9F6WoT3+M97EK3DrWtayK+dcqIQ7pbF73ssDvB/peDqxnWHAAAAC6sZjn2QrYmIXsIdTakv/ss5JjFQcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACuMQj8AAPzHZrNZ6r9O9fO7/MdoNDqjnwAAqvOixs8CgCc2m82HJEnOD/zxHR0PvtlsNuMkSRb6n5nQfqlCe4XIBmsgcADi4I/QDwCD50tO2ACY57fQDwAAW+T0DAAAvi04m81mqmr+TzVR5lknSfI1SZKb0Wj0lBhjs9kstG3jPe0SU+wq6b8JWliPRiNpMwAAQL8RYbPZbK421bnUjdNCu+RZ/63Qpu8SE2GkXcvcc0vbbnOfE/2Zk81mc1/U1sQYm83mWMfz9kCbvmw2m/cq1KMV2jp+y4LxEe6THqHt/aCfpYX3bAgceJcybkM/H0CrW1S6IV42MJeLFecoVsuHbHQawNmkXaej0egmifvWzaHFJ3vu4wq/aqVj+GTA+iaxAnWEiwTpnsU2P3XTaBTzMBqNorsBWdKe/9N5eGh9+ZgkyUVM808E9I7FM8/eoFtdQ9/W+TsRvE/ZeBS2V96h/P8YjUZmgt/1oLPY076+W+0XufFdxfR+dYqe8tsgm0501LRGHWJrCTFgwWnLrQGrTRsOLd4xnpgLSSKkpD1V3sP7mKw5TSwaapWq9XdC0rc5mEfmklpxi6yj5qz2wo6lPv+5zA71m/3eCvmZpRE9crUzdpll/nk/zlmCf/nsmsrbENXC5FC05VkOQODE3M5xRfeiGQHet82lTXtiFAAIHHtzcGddlA2xLv/GfKDNKGlDlcPE+8T2uN2X7X35W1Rb1deQKF0bKrjatGuXq2QYvEviRBadpiJ662p0/Dzgngs6FdqiAkXEcpP4O1ljRCBYXu9PLKal2NQbtyxUoZDfcrelipBYjqMkSV7pP69z/svoxE2NDXGtvn9pT9ltoqkFZV+AjFEVP3OVeJ0QlL2Q0jaJCdgXF/Am0jkK/3FjKaYD4kTd0C7EyYnx9b4IWQtjiwVbNhi3cZVr4mUbmgT+5W/ZiBC422w2f+s141g3jkOBfhkSdCri5hlV7UWT+q+cuLPEc1t1AbgtmhzyMxEG3RWpepmHr/P/Q9sp1qiniDfOz5puIZuvh9q41p9NNG1DH4lqwQWzuLS8yC1Nk6lQSvgUU5vU2+LFYvai5GQsG8feK8Qx3yxSigJKb3bFjTAajU5LLFpRBalW5DrfVhEum83mrGRCRRdPpRaaZYF17T5npfpf7uZUNC/yLqPR6FksbzabffmmSt9DY2xv4mSCU0WouJG/ko8pepF9l/u5aC8hVFijn7QtT7qeTEvWQYlV6cO7t+u1iAkxKkxDBNK5jGHpjApB08umgcmJvSDjpYu/Yzhg/CrmXDh9ykFSIcg4+nEYWpBxjfZGv8lXCK6VP//p8Ka3jTbWclCVPPP2uTc/BF+2H36INYC6wi2377r+T3faUkiVWlRyErZImQWiyP3St8y+vWiPWDs2m43kMqq7ScoLLdfLxXJg0b3YF+6w0oBniqw3YgX95aKBWLc3m414MU56ZLX/KTZ29CPcQCz3Ys1fR55dfxd53tc7lnhpi1jhbtvWooou0roiZW6JMrNkb4htQrfkTYWx3cf2Rp01CwIA1KJoo/xU8GdZfNteYrRol/B5n2t+FOdeUCYg9yb/VDf3TRWBU2TNkJPvoiAvSZQbRoUA2eOSQOJDRBvPMQR0XOUm33VDkSMWIAAYHgf3hIgvIUBSKGK+VRE4ZT/0S+bDXHkA8Z3FasIrUqvn+55b/ZNFPkpehAiKpKqpWYTOmYodGZcqt76sncTAHn295Wadg4fxWA/qkIj4bGVUeFFh0x6ryBHBIB+ZDPkJIYFbMebCEeVXlK1RxNl17maALExlAVhyNR7CIde+JdjsTq86/nIbQDMWH7LQWV3IeuU27QnTBvEE4Jdsf6qb4qNs3Y8tZUYZvTmIb4pTlrzsql5TdKUaNOLaJf/G1kahSrrqun8nRp/zgfH8V2uT5GuQFKb5TiJF21FE1s4vEd/sMH8TrOmtHJ2fZbdBou6DkvH7ac5FuhaWvUO/CBm9lVN0I+d7EiHW1u9DVNiLrpru7y7r/MQqcoqubNYlygy/AxI4LoqmRrvBNJir0Vmjeihwyq4Q1+XW+DV/WeMv9RBxbzSVhKwjx/q5rPLzSYRYW7+LqDAGH/aI0tICqnWVrDmB43BjjHKSD0XgOBLg0RaYa1jwNsZ8Fn0TOK6twFH3QQORPe7pOhH1QUKwtH47sLxtdFxvK1aG3/LTNXH1c71u6L+TWIgY43C22YlbZm6U/CkUarRbaDNjtS9mJxayXBU1/krRbT9wgF6r7U08QwXqZqePyqqt+4/LtfpjpFer+0bRFf4MWf+XTmLc9IT/pYKiMpElNtemMhNsHhNtG5AFp1L2SkvWxV1qWlH/TSKjbxachpa1jeU+qLlGllZzNmy1j84Fl8fS+u3QilOLg5mMNS9AVi9GOit/O2B7m8pa7oCsTSpajjWJ4a6AWem1eUsF1mQ8LmpGmWf1WA4RVdt1LETgfNSx+6vi6XGlt61MZDDWOmFHSZLIxlEmruVnp4ZOmFHNqZpjIlYBKVszrlilOVqXdgXOyorx5ohyI9Wagv+0yHsl6wXFX7vlVNc8p7cQRy5/GUCAvDiZ+M4W5KzgprikTG6qO4UD83lVpF3/qACPTthoXNDBYo3WDkV59GAkG+bxns3/STfFbdbVAkuNzMkzI229qiBgrmN23+v6kI1ZFe50DKOfp5mF4gBHFtpQUFW86njJgfdgXOVIqPiLAADgZ2GdqDU7OrHpgpy1e2xZrGo7lnpYmO4Rp1+1TWby3ZS4O88stWUX9Rq9KxA62WFiXST0EDgAAACQxMhuPFFdYf3/q+dLxLbOhEgAAAAASUVORK5CYII=">
+  <h2>TREINAMENTOS</h2>
+  <div class="sub">Operações — Pedro Aquino</div>
+  <div class="msg" id="smsg">Buscando as planilhas ao vivo no Google Sheets…</div>
+  <div class="bar"><i id="pbar" style="width: 10%;"></i></div>
+  <div class="pcts" id="spct">10%</div>
+  <div class="srcs">
+    <div class="src"><span class="dot ok" id="d_etv"></span><span class="n">ETV — estrutura do time<small>quem é quem, entrada, saída, hierarquia</small></span><span class="pill ok" id="s_etv">ok · 3.0 MB</span></div>
+    <div class="src"><span class="dot go" id="d_hist"></span><span class="n">Histórico de vendas<small>vendas validadas por mês vigente, ~35 MB</small></span><span class="pill go" id="s_hist">conectando…</span></div>
+    <div class="src"><span class="dot ok" id="d_base"></span><span class="n">Base atual — esteira<small>mês vigente em andamento</small></span><span class="pill ok" id="s_base">ok · 0.9 MB</span></div>
+  </div>
   <div id="serr"></div>
-</div>
+</div></div>
 
 <main>
+<div class="view on" id="v_cons">
   <div class="kpis" id="kpis"></div>
   <div class="toolbar">
-    <div class="f"><span class="lbl">Nível</span><select id="fNivel"><option value="">Todos</option><option>CONSULTOR</option><option>GERENTE</option><option>SUPERINTENDENTE</option><option>COORDENADOR</option><option>DIRETOR</option></select></div>
+    <div class="f"><span class="lbl">Nível</span><select id="fNivel" disabled="" title="Por enquanto a visão é só de consultores"><option value="CONSULTOR">Consultores</option></select></div>
     <div class="f"><span class="lbl">Situação</span><select id="fSit"><option value="ATIVO">Ativos</option><option value="INATIVO">Inativos</option><option value="">Todos</option></select></div>
     <div class="f"><span class="lbl">Diretor</span><select id="fDir"><option value="">Todos</option></select></div>
     <div class="f"><span class="lbl">Superint.</span><select id="fSup"><option value="">Todos</option></select></div>
     <div class="f"><span class="lbl">Gerente</span><select id="fGer"><option value="">Todos</option></select></div>
-    <div class="f"><span class="lbl">Desempenho</span><select id="fPerf"><option value="">Todos</option><option value="sem90">Sem venda há 90+ dias</option><option value="nunca">Nunca venderam</option><option value="mes">Com venda no mês atual</option><option value="esteira">Com pré-venda na esteira</option><option value="recem">Entrada ≤ 90 dias</option></select></div>
+    <div class="f"><span class="lbl">Desempenho</span><select id="fPerf"><option value="">Todos</option><option value="sem90">Sem venda há 90+ dias</option><option value="nunca">Nunca venderam</option><option value="mes">Com venda no mês vigente</option><option value="esteira">Com pré-venda na esteira</option><option value="recem">Entrada ≤ 90 dias</option><option value="risk">Risco: 90+ dias de casa sem venda</option></select></div>
+    <div class="f"><span class="lbl">Entrada de</span><input type="date" id="fEntDe"></div>
+    <div class="f"><span class="lbl">Entrada até</span><input type="date" id="fEntAte"></div>
     <div class="f"><span class="lbl">Buscar</span><input type="text" id="fQ" placeholder="apelido, nome, gerente…"></div>
-    <div class="f"><span class="lbl">Meses</span><select id="fMeses"><option>6</option><option selected>12</option><option>18</option><option>24</option></select></div>
-    <label class="chk"><input type="checkbox" id="fCur" checked> incluir mês atual nas médias</label>
+    <div class="f"><span class="lbl">Meses</span><select id="fMeses"><option>6</option><option selected="">12</option><option>18</option><option>24</option></select></div>
     <div class="f"><span class="lbl">≤ vermelho</span><input type="number" id="fLo" value="1" min="0"></div>
     <div class="f"><span class="lbl">≥ verde</span><input type="number" id="fHi" value="3" min="1"></div>
+    <button class="btn sec" id="btnLimpar" type="button" style="margin-bottom:1px">Limpar filtros</button>
   </div>
   <div class="legend">
     <span><i style="background:var(--ok)"></i>Igual ou maior: <b id="lgHi">3</b> vendas</span>
     <span><i style="background:var(--vermelho)"></i>Igual ou menor: <b id="lgLo">1</b> venda</span>
     <span><i style="background:repeating-linear-gradient(135deg,#E5DEDF 0 2px,#fff 2px 4px);border:1px solid #D8CFD1"></i>Antes da entrada / após a saída</span>
+    <span><i style="background:var(--amarelo);border:1px solid var(--amarelo-linha)"></i>Mês vigente em andamento (base atual) — fora de totais e médias</span>
+    <span><i style="background:var(--rosa);border:1px solid var(--rosa-linha)"></i>Risco: 90+ dias de casa sem nenhuma venda</span>
     <span class="cnt"><b id="cnt">0</b> pessoas</span>
   </div>
-  <div class="tblwrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+  <details id="cohort" style="margin-bottom:10px"><summary class="lbl" style="cursor:pointer;padding:6px 0">Resumo por mês de entrada (da seleção atual) — clique na turma para ver quem é</summary><div class="tblwrap" style="max-height:320px;margin-top:6px"><table id="tblCoh"></table></div></details>
+  <div class="tblwrap"><table id="tbl"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>
   <div class="foot" id="foot"></div>
+</div>
+
+<div class="view" id="v_cad">
+  <div class="kpis" id="kpisCad"></div>
+  <div class="sec2">
+    <div class="card"><h3>Turnover do time (consultores + coordenadores) — últimos 12 meses · clique nos números</h3><div style="overflow:auto"><table id="tblTurn"></table></div><div class="note">Entradas e saídas pela Data de entrada e Data de Saída do ETV. Headcount = ativos no último dia do mês. Turnover = saídas ÷ headcount do início do mês.</div></div>
+    <div class="card"><h3>Sobrevivência por turma de entrada · clique na turma</h3><div style="overflow:auto"><table id="tblSurv"></table></div><div class="note">De quem entrou no mês, % ainda ativo após 30, 60, 90 e 180 dias, e % que fez ao menos 1 venda validada. "—" = turma ainda não atingiu o prazo.</div></div>
+    <div class="card"><h3>Motivos de desligamento — últimos 90 dias · clique no motivo</h3><div id="motivos"></div></div>
+    <div class="card"><h3>Distribuição do time hoje · clique no diretor</h3><div id="distrib"></div></div>
+  </div>
+  <div class="toolbar">
+    <div class="f"><span class="lbl">Nível</span><select id="cNivel"><option value="GERENTE">Gerentes</option><option value="SUPERINTENDENTE">Superintendentes</option><option value="DIRETOR">Diretores</option></select></div>
+    <div class="f"><span class="lbl">Mostrar</span><select id="cSit"><option value="ATIVO">Com time ativo ou ativo no ETV</option><option value="">Todos que aparecem nas vendas</option></select></div>
+    <div class="f"><span class="lbl">Diretor</span><select id="cDir"><option value="">Todos</option></select></div>
+    <div class="f"><span class="lbl">Superint.</span><select id="cSup"><option value="">Todos</option></select></div>
+    <div class="f"><span class="lbl">Buscar</span><input type="text" id="cQ" placeholder="apelido…"></div>
+    <div class="f"><span class="lbl">Meses</span><select id="cMeses"><option>6</option><option selected="">12</option><option>18</option></select></div>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--rosa)"></i>Meses fechados (histórico, por mês vigente)</span>
+    <span><i style="background:var(--amarelo);border:1px solid var(--amarelo-linha)"></i>Mês vigente em andamento (base atual)</span>
+    <span>Vendas da cadeia = coluna GERENTE / GESTOR / DIRETOR da própria venda · time = consultores e coordenadores abaixo no ETV · clique no nome para a ficha, nos números para a relação</span>
+    <span class="cnt"><b id="cntCad">0</b> pessoas</span>
+  </div>
+  <div class="tblwrap"><table id="tblCad"><thead></thead><tbody></tbody><tfoot></tfoot></table></div>
+  <div class="foot" id="footCad"></div>
+</div>
 </main>
 
-<div id="ov"></div>
-<div id="dr"></div>
+<div id="mov"><div id="mbox"></div></div>
 
 <script>
 const SRC = {
@@ -173,16 +273,19 @@ const SRC = {
   base: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRheNdm5lTyI5ZsHW_KrwF_AjI0zfEqC8jbHlOh7h-oaQSTNPjg1WX-MCrRdf-I9l5L6TiH79NlH_Ou/pub?gid=1270555187&single=true&output=csv"
 };
 const LOGO_B64 = "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";
-document.getElementById('logo').src = "data:image/png;base64," + LOGO_B64;
+document.getElementById('logo').src = document.getElementById('logo2').src = "data:image/png;base64," + LOGO_B64;
 
 const VENDA_EST = new Set(["VENDASVVALIDADOCEFSV","VENDASVVALIDADODIRETONRSV"]);
 const TROCA_EST = "TROCACLUBEIPIRANGA";
 const PROPRIA_EST = "METROCASAPRESTADORESSVVALIDADO";
 const DESIST = "COMERCIALPROPOSTADESISTENCIA";
+const OUTRA_UNID = "VALIDADOEMOUTRAUNIDADE";
+const TEAM_LEVELS = new Set(["CONSULTOR","COORDENADOR"]);   // quem conta como "time" abaixo de um gerente
 
 /* ---------- utils ---------- */
 const norm = s => (s||"").normalize("NFKD").replace(/[̀-ͯ]/g,"").toUpperCase().replace(/[^A-Z0-9]/g,"");
 const normTxt = s => (s||"").normalize("NFKD").replace(/[̀-ͯ]/g,"").toUpperCase().trim();
+const hierName = s => normTxt(s).replace(/\s*\([A-Z]\)\s*$/,"").trim();
 function pDate(s){
   if(!s) return null;
   const m = String(s).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
@@ -192,13 +295,14 @@ function pDate(s){
   const d=new Date(y,+m[2]-1,+m[1]);
   return isNaN(d)?null:d;
 }
-const mk = d => d.getFullYear()*12 + d.getMonth();           // month index
+const mk = d => d.getFullYear()*12 + d.getMonth();
 const mkLabel = k => String(k%12+1).padStart(2,"0")+"/"+String(Math.floor(k/12)).slice(2);
 const mkLabelFull = k => String(k%12+1).padStart(2,"0")+"/"+Math.floor(k/12);
 const fmtD = d => d? String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear() : "—";
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-const CURK = mk(TODAY);
-function tempo(a,b){ // b-a in "1a 3m" / "8m" / "12d"
+let CURK = mk(TODAY);
+let CFG = {mes:null, semana:1};
+function tempo(a,b){
   if(!a) return "—"; b=b||TODAY;
   let months=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth()); if(b.getDate()<a.getDate()) months--;
   if(months<=0){ const d=Math.max(0,Math.round((b-a)/864e5)); return d+"d"; }
@@ -206,16 +310,17 @@ function tempo(a,b){ // b-a in "1a 3m" / "8m" / "12d"
   return (y?y+"a ":"")+(m||!y?m+"m":"");
 }
 const days = (a,b)=>Math.round(((b||TODAY)-a)/864e5);
+const addD = (d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
 const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (a,b)=> b? Math.round(100*a/b)+"%" : "—";
+const f1 = x => x==null||isNaN(x)? "—" : (Math.round(x*10)/10).toLocaleString("pt-BR");
+const $=s=>document.querySelector(s);
 
 function parseCSV(text){
   const rows=[]; let row=[], field="", q=false, i=0, n=text.length;
   while(i<n){
     const c=text[i];
-    if(q){
-      if(c==='"'){ if(text[i+1]==='"'){field+='"'; i+=2; continue;} q=false; i++; continue; }
-      field+=c; i++; continue;
-    }
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){field+='"'; i+=2; continue;} q=false; i++; continue; } field+=c; i++; continue; }
     if(c==='"'){ q=true; i++; continue; }
     if(c===','){ row.push(field); field=""; i++; continue; }
     if(c==='\r'){ i++; continue; }
@@ -228,36 +333,36 @@ function parseCSV(text){
 function colIndex(header){ const m={}; header.forEach((h,i)=>{ const k=norm(h); if(!(k in m)) m[k]=i; }); return m; }
 const g = (row,idx,name)=> { const i=idx[norm(name)]; return i==null? "" : (row[i]||"").trim(); };
 
-/* ---------- loading (with IndexedDB fallback cache) ---------- */
+/* ---------- loading ---------- */
 function idb(){ return new Promise((res,rej)=>{ const r=indexedDB.open("timevendas",1); r.onupgradeneeded=()=>r.result.createObjectStore("csv"); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); }
 async function cacheGet(k){ try{ const db=await idb(); return await new Promise((res,rej)=>{ const t=db.transaction("csv").objectStore("csv").get(k); t.onsuccess=()=>res(t.result); t.onerror=()=>rej(t.error); }); }catch(e){ return null; } }
 async function cachePut(k,v){ try{ const db=await idb(); await new Promise((res,rej)=>{ const t=db.transaction("csv","readwrite").objectStore("csv").put(v,k); t.onsuccess=res; t.onerror=()=>rej(t.error); }); }catch(e){} }
-
+function setSrc(key,cls,txt){ const p=$("#s_"+key), d=$("#d_"+key); p.className="pill "+cls; p.textContent=txt; d.className="dot "+cls; }
 async function fetchCSV(key, onProg){
-  const el=document.getElementById("s_"+key);
   try{
-    el.textContent="baixando…";
+    setSrc(key,"go","conectando…");
     const r=await fetch(SRC[key]+"&_="+Date.now(),{cache:"no-store"});
     if(!r.ok) throw new Error("HTTP "+r.status);
-    const total=+r.headers.get("content-length")||0; let got=0, chunks=[];
+    const total=+r.headers.get("content-length")||0; let got=0;
     const rd=r.body.getReader(); const dec=new TextDecoder("utf-8"); let txt="";
-    while(true){ const {done,value}=await rd.read(); if(done) break; got+=value.length; txt+=dec.decode(value,{stream:true}); el.textContent=(got/1048576).toFixed(1)+" MB"; onProg&&onProg(got,total); }
+    while(true){ const {done,value}=await rd.read(); if(done) break; got+=value.length; txt+=dec.decode(value,{stream:true}); setSrc(key,"go",(got/1048576).toFixed(1)+" MB"); onProg&&onProg(got,total); }
     txt+=dec.decode();
-    el.textContent="ok · "+(got/1048576).toFixed(1)+" MB";
+    setSrc(key,"ok","ok · "+(got/1048576).toFixed(1)+" MB");
     cachePut(key,{txt,ts:Date.now()});
     return {txt,live:true};
   }catch(e){
     const c=await cacheGet(key);
-    if(c){ el.innerHTML='<span class="alert">falhou ('+esc(e.message)+') · usando cache de '+new Date(c.ts).toLocaleString("pt-BR")+'</span>'; return {txt:c.txt,live:false,ts:c.ts}; }
-    el.innerHTML='<span class="alert">falhou: '+esc(e.message)+'</span>'; throw e;
+    if(c){ setSrc(key,"err","cache "+new Date(c.ts).toLocaleDateString("pt-BR")); return {txt:c.txt,live:false,ts:c.ts}; }
+    setSrc(key,"err","falhou"); throw e;
   }
 }
 
 /* ---------- model ---------- */
-let PEOPLE=[], STATS={}, VIEW=[], SORT={k:"hier",d:1};
+let PEOPLE=[], STATS={}, VIEW=[], SORT={k:"hier",d:1}, SALES=[], CVIEW=[], CSORT={k:"tot",d:-1}, RAW={}, LOAD={};
+const LISTS={}; let LID=0;
+function L(spec){ const id="L"+(++LID); LISTS[id]=spec; return `data-list="${id}"`; }   // registra uma lista clicável
 
 function promoDate(hist, role){
-  // last "PROMOVID[O/A] A <role> ... dd/mm/aa[aa]" in the text; also "a partir de"
   if(!hist) return null;
   const t=normTxt(hist);
   const re=new RegExp("PROMOVID[OA]S?\\s+(?:A|PARA)\\s+(?:O\\s+|A\\s+)?(?:CARGO\\s+DE\\s+)?"+role+"[^\\n/]{0,80}?(\\d{1,2}/\\d{1,2}/\\d{2,4})","g");
@@ -271,24 +376,25 @@ function buildPeople(etvRows){
     const funcao=g(r,idx,"FUNÇÃO"); const dep=g(r,idx,"Dep.");
     const p={
       i, cpf:norm(g(r,idx,"CPF")), nome:g(r,idx,"NOME COMPLETO").replace(/\s+/g," ").trim(),
-      apelido:g(r,idx,"APELIDO").trim(), ap:norm(g(r,idx,"APELIDO")),
-      gerente:normTxt(g(r,idx,"Gerente")), sup:normTxt(g(r,idx,"Superint.")), dir:normTxt(g(r,idx,"Diretor")),
+      apelido:g(r,idx,"APELIDO").trim(), ap:norm(g(r,idx,"APELIDO")), apTxt:hierName(g(r,idx,"APELIDO")),
+      gerente:hierName(g(r,idx,"Gerente")), sup:hierName(g(r,idx,"Superint.")), dir:hierName(g(r,idx,"Diretor")),
       sit:normTxt(g(r,idx,"Situação")), dep:normTxt(dep), funcao:funcao.replace(/\s+/g," ").trim(),
       entrada:pDate(g(r,idx,"Data de entrada")), saida:pDate(g(r,idx,"Data de Saida")),
-      hist:g(r,idx,"HISTÓRICO DO PRESTADOR"), obsDeslig:g(r,idx,"OBS DESLIGAMENTO"),
+      hist:g(r,idx,"HISTÓRICO DO PRESTADOR"), obsDeslig:normTxt(g(r,idx,"OBS DESLIGAMENTO")).replace("MÁ","MA"),
+      encerr:normTxt(g(r,idx,"ENCERRAMENTO MC OU PRESTADOR?")),
       dtGerCol:pDate(g(r,idx,"DATA QUE VIROU GERENTE")), dtSupCol:pDate(g(r,idx,"DATA QUE VIROU SUPERINTENDENTE")),
-      tempoAtivoCol:g(r,idx,"TEMPO ATIVO"), canal:g(r,idx,"CANAL DE CAPTAÇÃO")
+      tempoAtivoCol:g(r,idx,"TEMPO ATIVO")
     };
     const F=normTxt(p.funcao);
     p.nivel = F.includes("DIRETOR")?"DIRETOR": F.includes("SUPERINTENDENTE")?"SUPERINTENDENTE": F.includes("GERENTE")?"GERENTE": F.includes("COORDENADOR")?"COORDENADOR": F.includes("CONSULTOR")?"CONSULTOR":"OUTRO";
     p.time = p.dep==="VENDAS" && !/ASSISTENTE|ANALISTA/.test(F);
-    p.ativo = p.sit==="ATIVO" || p.sit.startsWith("APROVADO") ;
+    p.team = p.time && TEAM_LEVELS.has(p.nivel);
+    p.parceria = F.includes("PARCERIA");
+    p.ativo = p.sit==="ATIVO" || p.sit.startsWith("APROVADO");
     p.sitTag = p.sit==="ATIVO"?"ATIVO": p.sit.startsWith("APROVADO")?"APROVADO": p.sit.startsWith("PROCESSO")?"DESLIG.": p.sit==="INATIVO"?"INATIVO": p.sit||"—";
-    // role start (ciclo atual)
     p.cicloFonte="entrada"; p.ciclo=p.entrada;
     if(p.nivel==="GERENTE"||p.nivel==="SUPERINTENDENTE"||p.nivel==="DIRETOR"){
-      const role=p.nivel==="GERENTE"?"GERENTE":p.nivel==="SUPERINTENDENTE"?"SUPERINTENDENTE":"DIRETOR";
-      const h=promoDate(p.hist,role);
+      const h=promoDate(p.hist,p.nivel);
       const col=p.nivel==="GERENTE"?p.dtGerCol:p.nivel==="SUPERINTENDENTE"?p.dtSupCol:null;
       if(h){ p.ciclo=h; p.cicloFonte="histórico"; }
       else if(col && (!p.entrada || col.getTime()!==p.entrada.getTime())){ p.ciclo=col; p.cicloFonte="coluna"; }
@@ -297,273 +403,569 @@ function buildPeople(etvRows){
     }
     p.promoGer = promoDate(p.hist,"GERENTE"); p.promoSup=promoDate(p.hist,"SUPERINTENDENTE");
     p.recontratacao=/RECONTRATA/.test(normTxt(p.hist));
-    p.vendas=[]; p.propria=[]; p.pre=[]; p.vbase=[]; p.mes={};
+    p.vendasHist=[]; p.propria=[]; p.pre=[]; p.vbase=[];
     out.push(p);
   }
   return out;
 }
-// attribution: VENDEDOR = APELIDO and DATA DE CONTRATO >= entrada; several candidates -> latest entrada <= date
 function makeResolver(people){
   const byAp={};
   people.forEach(p=>{ if(p.ap && p.entrada){ (byAp[p.ap]=byAp[p.ap]||[]).push(p); } });
   for(const k in byAp) byAp[k].sort((a,b)=>a.entrada-b.entrada);
-  return (ap,d)=>{
-    const c=byAp[ap]; if(!c) return {p:null,why:"apelido não existe no ETV"};
-    let best=null; for(const p of c){ if(p.entrada<=d) best=p; else break; }
-    return best? {p:best,why:""} : {p:null,why:"contrato anterior à entrada de todos com esse apelido"};
-  };
+  return (ap,d)=>{ const c=byAp[ap]; if(!c) return null; let best=null; for(const p of c){ if(p.entrada<=d) best=p; else break; } return best; };
 }
 function buildSales(histRows, resolve){
-  const idx=colIndex(histRows[0]); const st={total:0,venda:0,troca:0,propria:0,semData:0,naoAtrib:0,naoAtribEx:{} ,minK:Infinity,maxK:-Infinity};
+  const idx=colIndex(histRows[0]); const st={total:0,venda:0,troca:0,propria:0,semMes:0,naoAtrib:0,naoAtribEx:{},minK:Infinity,maxK:-Infinity,porMes:{}};
+  const out=[];
   for(let i=1;i<histRows.length;i++){
     const r=histRows[i]; if(r.length<20) continue; st.total++;
     const est=norm(g(r,idx,"ESTÁGIO DE CONTRATO")||g(r,idx,"ESTAGIO DE CONTRATO"));
     if(est===TROCA_EST){ st.troca++; continue; }
     const isVenda=VENDA_EST.has(est), isPropria=est===PROPRIA_EST;
     if(!isVenda && !isPropria) continue;
-    const d=pDate(g(r,idx,"DATA DE CONTRATO ANAPRO")); if(!d){ st.semData++; continue; }
+    const mv=pDate(g(r,idx,"Mês Vigente")||g(r,idx,"Mes Vigente")); if(!mv){ st.semMes++; continue; }
+    const k=mk(mv); const d=pDate(g(r,idx,"DATA DE CONTRATO ANAPRO"));
     const vend=g(r,idx,"VENDEDOR(A) / PARCEIRO(A)");
-    const rec={d, k:mk(d), emp:g(r,idx,"EMPREEND")||g(r,idx,"EMPREENDIMENTO"), cliente:g(r,idx,"CLIENTES")||g(r,idx,"CLIENTE"), unidade:g(r,idx,"UNIDADE"), est:g(r,idx,"ESTÁGIO DE CONTRATO"), vend, gerente:g(r,idx,"GERENTE"), gestor:g(r,idx,"GESTOR"), equipe:g(r,idx,"EQUIPE"), vgv:g(r,idx,"VLRVENDA")};
-    const {p,why}=resolve(norm(vend),d);
-    if(!p){ if(isVenda){ st.naoAtrib++; st.naoAtribEx[vend||"(vazio)"]=(st.naoAtribEx[vend||"(vazio)"]||0)+1; } continue; }
-    if(isPropria){ st.propria++; p.propria.push(rec); continue; }
-    st.venda++; p.vendas.push(rec); p.mes[rec.k]=(p.mes[rec.k]||0)+1;
-    if(rec.k<st.minK) st.minK=rec.k; if(rec.k>st.maxK) st.maxK=rec.k;
+    const rec={k, d, chave:norm(g(r,idx,"CHAVE")), emp:g(r,idx,"EMPREEND")||g(r,idx,"EMPREENDIMENTO"), cliente:g(r,idx,"CLIENTES")||g(r,idx,"CLIENTE"), unidade:g(r,idx,"UNIDADE"), est:g(r,idx,"ESTÁGIO DE CONTRATO"), vend,
+      gerente:hierName(g(r,idx,"GERENTE")), gestor:hierName(g(r,idx,"GESTOR")), diretor:hierName(g(r,idx,"22")||g(r,idx,"DIRETOR")), equipe:g(r,idx,"EQUIPE"), src:"hist", propria:isPropria};
+    const p=resolve(norm(vend), d||mv); rec.p=p;
+    if(isPropria){ st.propria++; if(p) p.propria.push(rec); continue; }
+    st.venda++; st.porMes[k]=(st.porMes[k]||0)+1; if(k<st.minK) st.minK=k; if(k>st.maxK) st.maxK=k;
+    out.push(rec);
+    if(!p){ st.naoAtrib++; st.naoAtribEx[vend||"(vazio)"]=(st.naoAtribEx[vend||"(vazio)"]||0)+1; continue; }
+    p.vendasHist.push(rec);
   }
-  return st;
+  return {st,recs:out};
 }
 function buildBase(baseRows, resolve){
-  const idx=colIndex(baseRows[0]); const st={total:0,venda:0,pre:0,troca:0,propria:0,desist:0,naoAtrib:0,minD:null,maxD:null,estagios:{}};
+  const idx=colIndex(baseRows[0]); const st={total:0,venda:0,pre:0,troca:0,propria:0,desist:0,outraUnid:0,naoAtrib:0,minD:null,maxD:null,semanas:{}};
+  const out=[];
   for(let i=1;i<baseRows.length;i++){
     const r=baseRows[i]; if(r.length<20) continue; st.total++;
+    const sw=g(r,idx,"SEMANA VENDA"); if(sw) st.semanas[sw]=(st.semanas[sw]||0)+1;
     const estRaw=g(r,idx,"ESTAGIO")||g(r,idx,"ESTÁGIO"); const est=norm(estRaw);
-    st.estagios[estRaw||"(vazio)"]=(st.estagios[estRaw||"(vazio)"]||0)+1;
     if(est===TROCA_EST){ st.troca++; continue; }
     if(est===PROPRIA_EST||est==="METROCASAPRESTADORES"){ st.propria++; continue; }
     if(est===DESIST){ st.desist++; continue; }
+    if(est===OUTRA_UNID){ st.outraUnid++; continue; }
     const d=pDate(g(r,idx,"DATA DE CONTRATO ANAPRO"));
     if(d){ if(!st.minD||d<st.minD) st.minD=d; if(!st.maxD||d>st.maxD) st.maxD=d; }
     const vend=g(r,idx,"VENDEDOR(A) / PARCEIRO(A)");
-    const rec={d, emp:g(r,idx,"EMPREEND")||g(r,idx,"EMPREENDIMENTO"), cliente:g(r,idx,"CLIENTE"), unidade:g(r,idx,"UNIDADE"), est:estRaw||"---", status:g(r,idx,"STATUS"), vend};
-    const {p}=resolve(norm(vend), d||TODAY);
-    if(!p){ st.naoAtrib++; continue; }
-    if(VENDA_EST.has(est)){ st.venda++; p.vbase.push(rec); } else { st.pre++; p.pre.push(rec); }
+    const rec={d, chave:norm(g(r,idx,"CHAVE")), emp:g(r,idx,"EMPREEND")||g(r,idx,"EMPREENDIMENTO"), cliente:g(r,idx,"CLIENTE"), unidade:g(r,idx,"UNIDADE"), est:estRaw||"---", status:g(r,idx,"STATUS"), vend,
+      gerente:hierName(g(r,idx,"GERENTE")), gestor:hierName(g(r,idx,"GESTOR")), diretor:hierName(g(r,idx,"DIRETOR")), src:"base"};
+    const p=resolve(norm(vend), d||TODAY); rec.p=p;
+    if(VENDA_EST.has(est)){ st.venda++; rec.venda=true; out.push(rec); if(p) p.vbase.push(rec); else st.naoAtrib++; }
+    else { st.pre++; if(p) p.pre.push(rec); else st.naoAtrib++; }
   }
-  return st;
+  return {st,recs:out};
 }
-
-/* ---------- derived per person ---------- */
-function derive(p){
-  p.total=p.vendas.length;
-  p.ult = p.vendas.length? p.vendas.reduce((a,b)=>a.d>b.d?a:b).d : null;
-  p.diasSemVenda = p.ult? days(p.ult): (p.entrada? days(p.entrada): null);
-  p.vMesAtual = p.mes[CURK]||0;
-  p.tempoCasa = p.entrada? tempo(p.entrada, p.ativo?null:(p.saida||null)) : "—";
-  p.tempoCiclo = p.ciclo? tempo(p.ciclo, p.ativo?null:(p.saida||null)) : "—";
+function applyPeriod(){
+  const histCur=new Set(); SALES=[];
+  for(const r of RAW.hist.recs){ r.k2=r.k; SALES.push(r); if(r.k===CURK) histCur.add(r.chave); }
+  STATS.histCurDup=0; STATS.baseNovas=0;
+  for(const r of RAW.base.recs){ r.k2=CURK; if(r.chave && histCur.has(r.chave)){ STATS.histCurDup++; continue; } STATS.baseNovas++; SALES.push(r); }
+  for(const p of PEOPLE){
+    p.vendas=[...p.vendasHist];
+    const seen=new Set(p.vendasHist.filter(r=>r.k===CURK).map(r=>r.chave));
+    for(const r of p.vbase){ if(r.chave && seen.has(r.chave)) continue; p.vendas.push(r); }
+    p.mes={}; for(const r of p.vendas) p.mes[r.k2]=(p.mes[r.k2]||0)+1;
+    p.total=p.vendas.length;
+    p.ult = p.vendas.length? p.vendas.reduce((a,b)=>((a.d||0)>(b.d||0)?a:b)).d : null;
+    p.vMesAtual = p.mes[CURK]||0;
+    p.tempoCasa = p.entrada? tempo(p.entrada, p.ativo?null:(p.saida||null)) : "—";
+    p.tempoCiclo = p.ciclo? tempo(p.ciclo, p.ativo?null:(p.saida||null)) : "—";
+    p.sem90 = p.ult? days(p.ult)>90 : !!(p.entrada && days(p.entrada)>90);
+    const dd = p.entrada? days(p.entrada, p.ativo?null:(p.saida||null)) : null;
+    p.faixa = dd==null? "Sem data de entrada" : dd<=30? "A. Até 30 dias" : dd<=60? "B. 31 a 60 dias" : dd<=90? "C. 61 a 90 dias" : dd<=180? "D. 91 a 180 dias" : dd<=365? "E. 181 a 365 dias" : "F. Mais de 1 ano";
+  }
 }
-function activeInMonth(p,k){ // month k within [entrada month, saída month]
+function activeInMonth(p,k){
   if(!p.entrada) return false;
   if(k<mk(p.entrada)) return false;
   if(p.saida && !p.ativo && k>mk(p.saida)) return false;
   return k<=CURK;
 }
-function windowStats(p,nMonths,includeCur){
-  const end = includeCur? CURK : CURK-1; let v=0, m=0;
+function windowStats(p,nMonths){
+  const end = CURK-1; let v=0, m=0;
   for(let k=end-nMonths+1;k<=end;k++){ if(activeInMonth(p,k)){ m++; v+=(p.mes[k]||0); } }
   return {v,m,avg: m? v/m : null};
 }
 
+/* ---------- config ---------- */
+function autoCfg(){
+  const maxK=RAW.hist.st.maxK; const mes = maxK>-Infinity? maxK+1 : mk(TODAY);
+  const sem = Object.entries(RAW.base.st.semanas).sort((a,b)=>b[1]-a[1])[0];
+  const n = sem? (sem[0].match(/\d+/)||[1])[0] : 1;
+  return {mes: Math.floor(mes/12)+"-"+String(mes%12+1).padStart(2,"0"), semana:+n||1};
+}
+function loadCfg(){
+  let c=null; try{ c=JSON.parse(localStorage.getItem("tv_cfg")||"null"); }catch(e){}
+  const a=autoCfg(); CFG = (c&&c.mes)? c : a; CFG.auto = !(c&&c.mes);
+  setCurk();
+}
+function setCurk(){ const [y,m]=CFG.mes.split("-").map(Number); CURK=y*12+(m-1); $("#vigMes").textContent=String(m).padStart(2,"0")+"/"+y; $("#vigSem").textContent=CFG.semana; }
+function openCfg(){
+  const a=autoCfg(); const hs=RAW.hist.st, bs=RAW.base.st; const [y,m]=CFG.mes.split("-").map(Number); const k=y*12+m-1;
+  const semBase=Object.entries(bs.semanas).sort((x,z)=>z[1]-x[1]).map(x=>x[0]+" ("+x[1]+")").join(", ")||"—";
+  let info=`<b>Detecção automática:</b> mês ${a.mes.split("-").reverse().join("/")} · semana ${a.semana}<br>`;
+  info+=`Histórico: Mês Vigente de ${mkLabelFull(hs.minK)} a ${mkLabelFull(hs.maxK)} (${hs.venda} vendas)<br>`;
+  info+=`Base atual: ${bs.total} linhas · SEMANA VENDA: ${esc(semBase)} · contratos de ${fmtD(bs.minD)} a ${fmtD(bs.maxD)}<br>`;
+  if(hs.porMes[k]) info+=`<span class="w">Atenção:</span> o histórico já tem ${hs.porMes[k]} vendas com Mês Vigente ${mkLabelFull(k)}. Elas serão unidas às da base atual sem duplicar (pela CHAVE).<br>`;
+  if(k>hs.maxK+1) info+=`<span class="w">Atenção:</span> há ${k-hs.maxK-1} mês(es) entre o fim do histórico e o mês vigente escolhido. Esses meses vão aparecer zerados.<br>`;
+  const live=(LOAD.etv&&LOAD.hist&&LOAD.base);
+  openModal({narrow:true, title:"Configurações", sub:"Período, fontes de dados e ações", html:`
+    <section><h3>Período</h3><div class="cfgrow">
+      <label class="lbl">Mês vigente</label><input type="month" id="cfgMes" value="${CFG.mes}">
+      <label class="lbl">Semana</label><select id="cfgSem">${[1,2,3,4,5].map(n=>`<option ${n==CFG.semana?"selected":""}>${n}</option>`).join("")}</select>
+    </div><div class="info">${info}</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px"><button class="btn sec" id="cfgAuto">Detectar automaticamente</button><button class="btn" id="cfgSave">Salvar período</button></div></section>
+    <section><h3>Fontes de dados</h3><div class="tl">
+      <div class="k">Carregado em</div><div>${esc(LOAD.at||"—")} · ${live?'<span class="okt">ao vivo</span>':'<span class="alert">parcialmente do cache</span>'}</div>
+      <div class="k">ETV</div><div>${LOAD.n_etv} cadastros · ${PEOPLE.filter(p=>p.time).length} no time de vendas · ${PEOPLE.filter(p=>p.time&&p.ativo).length} ativos</div>
+      <div class="k">Histórico</div><div>${LOAD.n_hist} linhas · ${hs.venda} vendas validadas · ${hs.naoAtrib} sem dono no ETV</div>
+      <div class="k">Base atual</div><div>${LOAD.n_base} linhas · ${bs.venda} vendas · ${bs.pre} pré-vendas · ${bs.naoAtrib} sem dono</div>
+    </div></section>
+    <section><h3>Ações</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="btnReload">Atualizar dados agora</button><button class="btn sec" id="btnCsv">Exportar CSV (consultores filtrados)</button><button class="btn sec" id="btnClear">Limpar filtros e cache local</button></div></section>`});
+  $("#cfgAuto").onclick=()=>{ const a=autoCfg(); $("#cfgMes").value=a.mes; $("#cfgSem").value=a.semana; };
+  $("#cfgSave").onclick=()=>{ const mes=$("#cfgMes").value; if(!mes) return; CFG={mes, semana:+$("#cfgSem").value||1}; try{ localStorage.setItem("tv_cfg",JSON.stringify(CFG)); }catch(e){} closeModal(true); setCurk(); applyPeriod(); renderAll(); };
+  $("#btnReload").onclick=()=>location.reload();
+  $("#btnCsv").onclick=exportCsv;
+  $("#btnClear").onclick=async()=>{ try{ localStorage.clear(); const db=await idb(); db.transaction("csv","readwrite").objectStore("csv").clear(); }catch(e){} location.reload(); };
+}
+$("#vigBtn").onclick=openCfg; $("#gearBtn").onclick=openCfg;
+
+/* ---------- modal com pilha (voltar) ---------- */
+const MSTACK=[];
+function openModal(spec){
+  MSTACK.push(spec); renderModal();
+}
+function renderModal(){
+  const spec=MSTACK[MSTACK.length-1]; if(!spec){ $("#mov").classList.remove("on"); return; }
+  $("#mbox").className=spec.narrow?"narrow":"";
+  $("#mbox").innerHTML=`<div class="hd"><div><h2>${spec.title}</h2>${spec.sub?`<div class="sub">${spec.sub}</div>`:""}</div><div class="acts">${MSTACK.length>1?'<button class="btn sec" id="mback">← Voltar</button>':''}<button class="x" id="mx">×</button></div></div>${spec.html}`;
+  $("#mov").classList.add("on"); $("#mov").scrollTop=0;
+  $("#mx").onclick=()=>closeModal(true);
+  const b=$("#mback"); if(b) b.onclick=()=>closeModal(false);
+  if(spec.after) spec.after();
+}
+function closeModal(all){ if(all) MSTACK.length=0; else MSTACK.pop(); renderModal(); }
+$("#mov").addEventListener("click",e=>{ if(e.target.id==="mov") closeModal(true); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(false); });
+// clique delegado: listas e fichas
+document.addEventListener("click",e=>{
+  const l=e.target.closest("[data-list]"); if(l){ e.stopPropagation(); const s=LISTS[l.dataset.list]; if(s) showList(s); return; }
+  const f=e.target.closest("[data-ficha]"); if(f){ e.stopPropagation(); openFicha(+f.dataset.ficha); return; }
+  const c=e.target.closest("[data-cad]"); if(c){ e.stopPropagation(); const [lv,nm]=c.dataset.cad.split("|"); openCad(lv,nm); return; }
+},true);
+
+/* ---------- listas ---------- */
+function peopleTable(arr, opts={}){
+  if(!arr.length) return '<div class="dim" style="padding:8px 0">ninguém nesta relação</div>';
+  const showSaida=opts.saida||arr.some(p=>!p.ativo);
+  return `<table class="sl"><thead><tr><th>#</th><th>Apelido · nome</th><th>Função</th><th>Gerente / Superint.</th><th>Sit.</th><th>Entrada</th>${showSaida?'<th>Saída · motivo</th>':''}<th>Tempo casa</th><th class="num">${mkLabel(CURK-3)} · ${mkLabel(CURK-2)} · ${mkLabel(CURK-1)}</th><th class="num">Mês vig.</th><th class="num">Total</th><th class="num">Esteira</th><th class="num">Últ. venda</th></tr></thead><tbody>
+  ${arr.map((p,i)=>`<tr class="clk" data-ficha="${p.i}"><td class="dim">${i+1}</td><td><b>${esc(p.apelido||"—")}</b><br><span class="dim">${esc(p.nome)}</span></td><td class="dim">${esc(p.funcao)}</td><td>${esc(p.gerente||"—")} / ${esc(p.sup||"—")}</td><td><span class="badge ${p.ativo?'at':p.sitTag==='INATIVO'?'in':'pd'}">${esc(p.sitTag)}</span></td><td>${fmtD(p.entrada)}</td>${showSaida?`<td>${p.saida?fmtD(p.saida):"—"}${p.obsDeslig?`<br><span class="dim">${esc(p.obsDeslig)}</span>`:""}</td>`:""}<td>${p.tempoCasa}</td><td class="num">${p.mes[CURK-3]||0} · ${p.mes[CURK-2]||0} · ${p.mes[CURK-1]||0}</td><td class="num" style="background:var(--amarelo-bg)">${p.vMesAtual}</td><td class="num"><b>${p.total}</b></td><td class="num">${p.pre.length||"—"}</td><td class="num ${p.sem90&&p.ativo?'alert':''}">${p.ult?days(p.ult)+" d":"nunca"}</td></tr>`).join("")}</tbody></table>`;
+}
+function salesTable(arr){
+  if(!arr.length) return '<div class="dim" style="padding:8px 0">nenhuma venda</div>';
+  return `<table class="sl"><thead><tr><th>#</th><th>Mês vig.</th><th>Contrato</th><th>Vendedor</th><th>Gerente</th><th>Superint.</th><th>Diretor</th><th>Cliente</th><th>Empreend. · un.</th><th>Fonte</th></tr></thead><tbody>
+  ${arr.map((s,i)=>`<tr ${s.p?`class="clk" data-ficha="${s.p.i}"`:""}><td class="dim">${i+1}</td><td>${mkLabel(s.k2)}</td><td>${fmtD(s.d)}</td><td><b>${esc(s.vend)}</b>${s.p?`<br><span class="dim">${esc(s.p.nome)}</span>`:' <span class="badge warn" title="sem dono no ETV">?</span>'}</td><td>${esc(s.gerente)}</td><td>${esc(s.gestor)}</td><td>${esc(s.diretor)}</td><td>${esc(s.cliente)}</td><td>${esc(s.emp)} · ${esc(s.unidade)}</td><td class="dim">${s.src==="base"?"base":"hist."}</td></tr>`).join("")}</tbody></table>`;
+}
+function entityTable(arr, level){
+  return `<table class="sl"><thead><tr><th>#</th><th>Apelido · nome</th><th>Função</th><th>Superint. / Diretor</th><th>Sit.</th><th>No cargo desde</th><th class="num">Time ativo</th><th class="num">${mkLabel(CURK-1)}</th><th class="num">Mês vig.</th></tr></thead><tbody>
+  ${arr.map((p,i)=>`<tr class="clk" data-cad="${level}|${esc(p.apTxt)}"><td class="dim">${i+1}</td><td><b>${esc(p.apelido)}</b><br><span class="dim">${esc(p.nome)}</span></td><td class="dim">${esc(p.funcao)}</td><td>${esc(p.sup||"—")} / ${esc(p.dir||"—")}</td><td><span class="badge ${p.ativo?'at':'in'}">${esc(p.sitTag)}</span></td><td>${fmtD(p.ciclo)} · ${p.tempoCiclo}</td><td class="num">${p._team??"—"}</td><td class="num">${p._prev??"—"}</td><td class="num" style="background:var(--amarelo-bg)">${p._cur??"—"}</td></tr>`).join("")}</tbody></table>`;
+}
+function showList(s){
+  if(s.two){
+    openModal({title:s.title, sub:s.sub, html:`<div class="two"><div><h3><b>${s.two[0].items.length}</b> ${s.two[0].title}</h3>${peopleTable(s.two[0].items,{saida:false})}</div><div><h3><b>${s.two[1].items.length}</b> ${s.two[1].title}</h3>${peopleTable(s.two[1].items,{saida:true})}</div></div>`});
+    return;
+  }
+  const body = s.kind==="sales"? salesTable(s.items) : s.kind==="entity"? entityTable(s.items,s.level) : peopleTable(s.items,s.opts||{});
+  openModal({title:s.title, sub:(s.sub||"")+(s.items?` · ${s.items.length} ${s.kind==="sales"?"vendas":"pessoas"} · clique na linha para abrir a ficha`:""), html:`<section>${body}</section>`});
+}
+
 /* ---------- UI ---------- */
-const $=s=>document.querySelector(s);
 function fillSel(id, vals){ const s=$(id); const cur=s.value; s.innerHTML='<option value="">Todos</option>'+vals.map(v=>`<option>${esc(v)}</option>`).join(""); s.value=cur; }
+function hierKey(p){ return [p.dir||"ZZZ",p.sup||"ZZZ",p.gerente||"ZZZ",{DIRETOR:0,SUPERINTENDENTE:1,GERENTE:2,COORDENADOR:3,CONSULTOR:4,OUTRO:5}[p.nivel],p.apelido||"ZZZ"].join("|"); }
+function cellCls(v,act,lo,hi){ return !act?"na": v<=lo?"lo": v>=hi?"hi":"mid"; }
 function initFilters(){
   const team=PEOPLE.filter(p=>p.time);
   const uniq=(f)=>[...new Set(team.filter(p=>p.ativo).map(f).filter(Boolean))].sort();
   fillSel("#fDir",uniq(p=>p.dir)); fillSel("#fSup",uniq(p=>p.sup)); fillSel("#fGer",uniq(p=>p.gerente));
-  ["#fNivel","#fSit","#fDir","#fSup","#fGer","#fPerf","#fMeses","#fCur","#fLo","#fHi"].forEach(id=>$(id).addEventListener("change",render));
-  $("#fQ").addEventListener("input",render);
+  fillSel("#cDir",uniq(p=>p.dir)); fillSel("#cSup",uniq(p=>p.sup));
+  const ids=["#fSit","#fDir","#fSup","#fGer","#fPerf","#fMeses","#fLo","#fHi","#fEntDe","#fEntAte","#fQ"];
+  try{ const sv=JSON.parse(localStorage.getItem("tv_filters")||"{}"); ids.forEach(id=>{ if(sv[id]!=null) $(id).value=sv[id]; }); }catch(e){}
+  const save=()=>{ try{ const o={}; ids.forEach(id=>o[id]=$(id).value); localStorage.setItem("tv_filters",JSON.stringify(o)); }catch(e){} };
+  ids.forEach(id=>$(id).addEventListener(id==="#fQ"?"input":"change",()=>{ save(); render(); }));
+  $("#btnLimpar").onclick=()=>{ ids.forEach(id=>{ $(id).value = id==="#fSit"?"ATIVO": id==="#fMeses"?"12": id==="#fLo"?"1": id==="#fHi"?"3":""; }); save(); render(); };
+  ["#cNivel","#cSit","#cDir","#cSup","#cMeses"].forEach(id=>$(id).addEventListener("change",renderCad)); $("#cQ").addEventListener("input",renderCad);
+  const act={}; PEOPLE.filter(p=>p.time&&p.ativo&&p.ap).forEach(p=>(act[p.ap]=act[p.ap]||[]).push(p));
+  PEOPLE.forEach(p=>{ p.apDup = p.ap && act[p.ap] && act[p.ap].length>1; });
+  document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{ document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t)); document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v_"+t.dataset.v)); try{localStorage.setItem("tv_tab",t.dataset.v);}catch(e){} });
+  try{ const tb=localStorage.getItem("tv_tab"); if(tb) document.querySelector(`.tab[data-v="${tb}"]`).click(); }catch(e){}
 }
-function hierKey(p){ return [p.dir||"ZZZ",p.sup||"ZZZ",p.gerente||"ZZZ",{DIRETOR:0,SUPERINTENDENTE:1,GERENTE:2,COORDENADOR:3,CONSULTOR:4,OUTRO:5}[p.nivel],p.apelido||"ZZZ"].join("|"); }
+function renderAll(){ render(); renderCad(); renderFoot(); }
+const KPI=(v,c,l,cls,list,tip)=>`<div class="kpi ${cls||""}" ${list?L(list):""} title="${esc(tip||"Clique para ver a relação")}"><div class="v num">${v}</div><div class="c">${c}</div><div class="l lbl">${l}</div></div>`;
 
+/* ================= CONSULTORES ================= */
 function render(){
-  const nM=+$("#fMeses").value, inc=$("#fCur").checked, lo=+$("#fLo").value, hi=+$("#fHi").value;
+  const nM=+$("#fMeses").value, lo=+$("#fLo").value, hi=+$("#fHi").value;
+  const entDe=$("#fEntDe").value? new Date($("#fEntDe").value+"T00:00:00"):null, entAte=$("#fEntAte").value? new Date($("#fEntAte").value+"T00:00:00"):null;
   $("#lgLo").textContent=lo; $("#lgHi").textContent=hi;
-  const fN=$("#fNivel").value, fS=$("#fSit").value, fD=$("#fDir").value, fSu=$("#fSup").value, fG=$("#fGer").value, fP=$("#fPerf").value, q=normTxt($("#fQ").value);
-  const endK = CURK, startK = CURK-nM+1;
-  VIEW = PEOPLE.filter(p=>p.time).filter(p=>{
-    if(fN && p.nivel!==fN) return false;
+  const fS=$("#fSit").value, fD=$("#fDir").value, fSu=$("#fSup").value, fG=$("#fGer").value, fP=$("#fPerf").value, q=normTxt($("#fQ").value);
+  const endK = CURK-1, startK = CURK-nM;
+  VIEW = PEOPLE.filter(p=>p.time && p.nivel==="CONSULTOR").filter(p=>{
     if(fS==="ATIVO" && !p.ativo) return false;
     if(fS==="INATIVO" && p.ativo) return false;
     if(fD && p.dir!==fD) return false; if(fSu && p.sup!==fSu) return false; if(fG && p.gerente!==fG) return false;
+    if(entDe && !(p.entrada && p.entrada>=entDe)) return false;
+    if(entAte && !(p.entrada && p.entrada<=entAte)) return false;
     if(q && !(normTxt(p.apelido+" "+p.nome+" "+p.gerente+" "+p.sup+" "+p.funcao).includes(q))) return false;
     if(fP==="sem90" && !(p.ult && days(p.ult)>90)) return false;
     if(fP==="nunca" && p.total>0) return false;
     if(fP==="mes" && !p.vMesAtual) return false;
     if(fP==="esteira" && !p.pre.length) return false;
     if(fP==="recem" && !(p.entrada && days(p.entrada)<=90)) return false;
+    if(fP==="risk" && !(p.ativo && p.total===0 && p.entrada && days(p.entrada)>90)) return false;
     return true;
   });
-  VIEW.forEach(p=>{ p.w3=windowStats(p,3,inc); p.w6=windowStats(p,6,inc); p.wN=0; for(let k=startK;k<=endK;k++) p.wN+=(p.mes[k]||0); });
-  // sort
+  VIEW.forEach(p=>{ p.w3=windowStats(p,3); p.w6=windowStats(p,6); p.wN=0; for(let k=startK;k<=endK;k++) p.wN+=(p.mes[k]||0); p.risk = p.ativo && p.total===0 && p.entrada && days(p.entrada)>90; });
   const dir=SORT.d; const kf={
-    hier:p=>hierKey(p), ap:p=>p.apelido, sup:p=>p.sup, ger:p=>p.gerente, func:p=>p.funcao, ent:p=>p.entrada?p.entrada.getTime():0, casa:p=>p.entrada?-p.entrada.getTime():1, ciclo:p=>p.ciclo?-p.ciclo.getTime():1,
-    tot:p=>p.wN, totall:p=>p.total, pre:p=>p.pre.length, vb:p=>p.vbase.length, w3:p=>p.w3.v, w6:p=>p.w6.v, ult:p=>p.ult?p.ult.getTime():0, sit:p=>p.sitTag
+    hier:p=>hierKey(p), ap:p=>p.apelido, sup:p=>p.sup, ger:p=>p.gerente, func:p=>p.funcao, ent:p=>p.entrada?p.entrada.getTime():0, casa:p=>p.entrada?-p.entrada.getTime():1,
+    tot:p=>p.wN, totall:p=>p.total, cur:p=>p.vMesAtual, pre:p=>p.pre.length, w3:p=>p.w3.v, w6:p=>p.w6.v, ult:p=>p.ult?p.ult.getTime():0, sit:p=>p.sitTag
   };
   const kfn = SORT.k.startsWith("m:")? (k=>p=>p.mes[k]||0)(+SORT.k.slice(2)) : kf[SORT.k];
   VIEW.sort((a,b)=>{ const x=kfn(a), y=kfn(b); return (x<y?-1:x>y?1:0)*dir || hierKey(a).localeCompare(hierKey(b)); });
   $("#cnt").textContent=VIEW.length;
 
-  // header
   const th=(k,lab,cls="")=>`<th class="${cls}${SORT.k===k?' sorted':''}" data-k="${k}">${lab}${SORT.k===k?'<span class="arr"> '+(SORT.d>0?'▲':'▼')+'</span>':''}</th>`;
-  let h="<tr>"+th("hier","#")+th("sup","Superint.","l")+th("ger","Gerente","l")+th("ap","Consultor","l")+th("func","Função","l")+th("sit","Sit.")+th("ent","Entrada")+th("casa","Tempo casa<br>ciclo atual");
+  let h="<tr>"+th("hier","#","stk s0")+th("sup","Superint.","l stk s1")+th("ger","Gerente","l stk s2")+th("ap","Consultor","l stk s3")+th("func","Função","l")+th("sit","Sit.")+th("ent","Entrada")+th("casa","Tempo casa");
   for(let k=startK;k<=endK;k++) h+=th("m:"+k, mkLabel(k), "mon");
-  h+=th("tot","Total<br>"+nM+"m")+th("totall","Total<br>geral")+th("ult","Últ. venda")+th("pre","Esteira<br>pré-vendas")+th("vb","Esteira<br>vendas")+th("w3","Últimos 3 meses","l")+th("w6","Últimos 6 meses","l")+"</tr>";
+  h+=th("tot","Total<br>"+nM+"m")+th("totall","Total<br>geral")+th("cur","Mês vigente<br>"+mkLabel(CURK)+" · sem "+CFG.semana,"cur")+th("ult","Últ. venda")+th("pre","Esteira<br>pré-vendas")+th("w3","Últimos 3 meses","l")+th("w6","Últimos 6 meses","l")+"</tr>";
   $("#tbl thead").innerHTML=h;
-  $("#tbl thead").querySelectorAll("th").forEach(t=>t.onclick=()=>{ const k=t.dataset.k; if(SORT.k===k) SORT.d=-SORT.d; else { SORT.k=k; SORT.d = (k==="hier"||k==="ap"||k==="sup"||k==="ger"||k==="func"||k==="sit")?1:-1; } render(); });
+  $("#tbl thead").querySelectorAll("th").forEach(t=>t.onclick=()=>{ const k=t.dataset.k; if(SORT.k===k) SORT.d=-SORT.d; else { SORT.k=k; SORT.d = ["hier","ap","sup","ger","func","sit"].includes(k)?1:-1; } render(); });
 
-  // body
-  const fmtAvg=x=>x==null?"—":(Math.round(x*10)/10).toLocaleString("pt-BR");
   let rows=[]; let n=0;
   for(const p of VIEW){
-    n++;
-    let cells="";
-    for(let k=startK;k<=endK;k++){
-      const act=activeInMonth(p,k); const v=p.mes[k]||0;
-      const cls=!act?"na": v<=lo?"lo": v>=hi?"hi":"mid";
-      cells+=`<td class="m"><span class="${cls}">${act?v:"·"}</span></td>`;
-    }
+    n++; let cells="";
+    for(let k=startK;k<=endK;k++){ const act=activeInMonth(p,k); const v=p.mes[k]||0; cells+=`<td class="m"><span class="${cellCls(v,act,lo,hi)}">${act?v:"·"}</span></td>`; }
     const sitB=`<span class="badge ${p.sitTag==='ATIVO'?'at':p.sitTag==='INATIVO'?'in':'pd'}">${esc(p.sitTag)}</span>`;
     const ult = p.ult? `${fmtD(p.ult)}<br><span class="dim ${days(p.ult)>90&&p.ativo?'alert':''}">${days(p.ult)} d</span>` : `<span class="dim">nunca</span>`;
-    const w3=`Vendas: <b>${p.w3.v}</b> · Média: <b>${fmtAvg(p.w3.avg)}</b>${p.w3.m<3?` <span class="dim">(${p.w3.m}m)</span>`:""}`;
-    const w6=`Vendas: <b>${p.w6.v}</b> · Média: <b>${fmtAvg(p.w6.avg)}</b>${p.w6.m<6?` <span class="dim">(${p.w6.m}m)</span>`:""}`;
+    const w3=`Vendas: <b>${p.w3.v}</b> · Média: <b>${f1(p.w3.avg)}</b>${p.w3.m<3?` <span class="dim">(${p.w3.m}m)</span>`:""}`;
+    const w6=`Vendas: <b>${p.w6.v}</b> · Média: <b>${f1(p.w6.avg)}</b>${p.w6.m<6?` <span class="dim">(${p.w6.m}m)</span>`:""}`;
     const entradaCell = p.entrada? fmtD(p.entrada) + (!p.ativo && p.saida? `<br><span class="dim">saída ${fmtD(p.saida)}</span>`:"") : "—";
-    rows.push(`<tr data-i="${p.i}">
-      <td class="dim num">${n}</td>
-      <td class="l sm">${esc(p.sup||"—")}</td><td class="l sm">${esc(p.gerente||"—")}</td>
-      <td class="l ap">${esc(p.apelido||"—")}${p.recontratacao?' <span class="badge warn" title="Recontratação">R</span>':''}<span class="nm" title="${esc(p.nome)}">${esc(p.nome)}</span></td>
+    rows.push(`<tr data-ficha="${p.i}" class="${p.risk?'risk':''}">
+      <td class="dim num stk s0">${n}</td>
+      <td class="l sm stk s1">${esc(p.sup||"—")}</td><td class="l sm stk s2">${esc(p.gerente||"—")}</td>
+      <td class="l ap stk s3">${esc(p.apelido||"—")}${p.recontratacao?' <span class="badge warn" title="Recontratação">R</span>':''}${p.apDup?' <span class="badge warn" title="Outra pessoa ativa usa o mesmo apelido — a atribuição usa a data de entrada">≠</span>':''}<span class="nm" title="${esc(p.nome)}">${esc(p.nome)}</span></td>
       <td class="l func">${esc(p.funcao)}</td><td>${sitB}</td>
       <td class="sm num">${entradaCell}</td>
-      <td class="sm num">${p.tempoCasa}${p.nivel!=="CONSULTOR"&&p.ciclo? `<br><span class="dim" title="Ciclo atual (${esc(p.cicloFonte)})">ciclo ${p.tempoCiclo}</span>`:""}</td>
+      <td class="sm num">${p.tempoCasa}</td>
       ${cells}
       <td class="tot num">${p.wN}</td><td class="num">${p.total}${p.propria.length?` <span class="dim" title="compra própria (prestador)">+${p.propria.length}p</span>`:""}</td>
+      <td class="m"><span class="cur">${activeInMonth(p,CURK)?p.vMesAtual:"·"}</span></td>
       <td class="sm num">${ult}</td>
-      <td class="est num"><b class="pre">${p.pre.length||"—"}</b></td><td class="est num"><b class="vd">${p.vbase.length||"—"}</b></td>
+      <td class="num" title="${esc(p.pre.map(s=>s.est).join('\n'))}"><b style="color:var(--vinho)">${p.pre.length||"—"}</b></td>
       <td class="l sm">${w3}</td><td class="l sm">${w6}</td></tr>`);
   }
   $("#tbl tbody").innerHTML=rows.join("");
-  $("#tbl tbody").querySelectorAll("tr").forEach(tr=>tr.onclick=()=>openDrawer(+tr.dataset.i));
-  renderKpis();
+  let f=`<tr><td class="stk s0"></td><td class="l stk s1">Total da seleção</td><td class="l stk s2 num">${VIEW.length} cons.</td><td class="l stk s3 dim">vendas / média por consultor na casa</td><td></td><td></td><td></td><td></td>`;
+  for(let k=startK;k<=endK;k++){ const act=VIEW.filter(p=>activeInMonth(p,k)); const v=act.reduce((a,p)=>a+(p.mes[k]||0),0); f+=`<td class="num">${v}<br><span class="dim">${act.length?f1(v/act.length):"—"}</span></td>`; }
+  const sum=(fn)=>VIEW.reduce((a,p)=>a+fn(p),0);
+  const m3=sum(p=>p.w3.m), m6=sum(p=>p.w6.m), s3=sum(p=>p.w3.v), s6=sum(p=>p.w6.v);
+  f+=`<td class="num">${sum(p=>p.wN)}</td><td class="num">${sum(p=>p.total)}</td><td class="num">${sum(p=>p.vMesAtual)}</td><td></td><td class="num">${sum(p=>p.pre.length)}</td><td class="l">Vendas: ${s3} · Média: ${m3?f1(s3/m3):"—"}</td><td class="l">Vendas: ${s6} · Média: ${m6?f1(s6/m6):"—"}</td></tr>`;
+  $("#tbl tfoot").innerHTML=f;
+  renderCohort(); renderKpis();
+}
+function renderCohort(){
+  const g={}; VIEW.forEach(p=>{ if(!p.entrada) return; const k=mk(p.entrada); (g[k]=g[k]||[]).push(p); });
+  const ks=Object.keys(g).map(Number).sort((a,b)=>b-a);
+  if(!ks.length){ $("#tblCoh").innerHTML='<tr><td class="dim">sem dados</td></tr>'; return; }
+  const maxAvg=Math.max(...ks.map(k=>{ const a=g[k]; return a.reduce((x,p)=>x+p.total,0)/a.length; }),0.01);
+  let h=`<thead><tr><th class="l">Mês de entrada</th><th>Consultores</th><th>Ativos</th><th>Nunca venderam</th><th>Vendas (geral)</th><th>Média vendas / consultor</th><th>Vendas últ. 3 meses</th><th>Mês vigente</th><th>Na esteira</th><th class="l"></th></tr></thead><tbody>`;
+  for(const k of ks){ const a=g[k]; const tot=a.reduce((x,p)=>x+p.total,0), avg=tot/a.length; const nv=a.filter(p=>!p.total);
+    h+=`<tr><td class="l sg clk" ${L({title:"Turma "+mkLabelFull(k),sub:"consultores da seleção atual que entraram em "+mkLabelFull(k),items:a})}>${mkLabelFull(k)}</td><td>${a.length}</td><td>${a.filter(p=>p.ativo).length}</td><td class="${nv.length?'alert clk':''}" ${nv.length?L({title:"Turma "+mkLabelFull(k)+" — nunca venderam",items:nv}):""}>${nv.length}</td><td>${tot}</td><td><b>${f1(avg)}</b></td><td>${a.reduce((x,p)=>x+p.w3.v,0)}</td><td>${a.reduce((x,p)=>x+p.vMesAtual,0)}</td><td>${a.reduce((x,p)=>x+p.pre.length,0)}</td><td class="l"><span class="bar" style="width:${Math.round(120*avg/maxAvg)}px"></span></td></tr>`; }
+  $("#tblCoh").innerHTML=h+"</tbody>";
 }
 function renderKpis(){
   const team=PEOPLE.filter(p=>p.time&&p.ativo);
   const cons=team.filter(p=>p.nivel==="CONSULTOR");
-  const sem90=cons.filter(p=>p.ult?days(p.ult)>90:(p.entrada&&days(p.entrada)>90)).length;
-  const nunca=cons.filter(p=>!p.total).length;
-  const refK = STATS.hist.maxK>-Infinity? STATS.hist.maxK : CURK;   // último mês com venda validada no histórico
-  const comMes=team.filter(p=>p.mes[refK]).length;
-  const vMes=team.reduce((a,p)=>a+(p.mes[refK]||0),0);
-  const pre=team.reduce((a,p)=>a+p.pre.length,0), vb=team.reduce((a,p)=>a+p.vbase.length,0);
-  const recem=cons.filter(p=>p.entrada&&days(p.entrada)<=90).length;
-  const K=(v,c,l,cls="")=>`<div class="kpi ${cls}"><div class="v num">${v}</div><div class="c">${c}</div><div class="l lbl">${l}</div></div>`;
+  const sem90=cons.filter(p=>p.sem90);
+  const nunca=cons.filter(p=>!p.total);
+  const recem=cons.filter(p=>p.entrada&&days(p.entrada)<=90);
+  const vCur=cons.reduce((a,p)=>a+p.vMesAtual,0), comCur=cons.filter(p=>p.vMesAtual);
+  const prevK=CURK-1, vPrev=cons.reduce((a,p)=>a+(p.mes[prevK]||0),0), comPrev=cons.filter(p=>p.mes[prevK]);
+  const comPre=team.filter(p=>p.pre.length), pre=comPre.reduce((a,p)=>a+p.pre.length,0);
+  const byV=(arr,k)=>[...arr].sort((a,b)=>(b.mes[k]||0)-(a.mes[k]||0));
   $("#kpis").innerHTML=
-    K(team.length, `${cons.length} consultores · ${team.filter(p=>p.nivel==="GERENTE").length} gerentes · ${team.filter(p=>p.nivel==="SUPERINTENDENTE").length} superint.`, "Ativos no time de vendas")+
-    K(vMes, `${comMes} pessoas venderam (${team.length?Math.round(100*comMes/team.length):0}% do time)`, "Vendas validadas em "+mkLabelFull(refK)+(refK<CURK?" (último mês c/ dados)":""),"ok")+
-    K(sem90, `${cons.length?Math.round(100*sem90/cons.length):0}% dos consultores ativos`, "Consultores sem venda há 90+ dias","crit")+
-    K(nunca, `${recem} entraram há ≤ 90 dias`, "Consultores ativos que nunca venderam","crit")+
-    K(pre, `${STATS.base.naoAtrib} na base sem dono no ETV`, "Pré-vendas na esteira (base atual)")+
-    K(vb, `base: ${STATS.base.minD?fmtD(STATS.base.minD)+" a "+fmtD(STATS.base.maxD):"—"}`, "Vendas validadas na base atual","ok");
+    KPI(cons.length, `time: ${team.length} ativos · ${team.filter(p=>p.nivel==="GERENTE").length} gerentes · ${team.filter(p=>p.nivel==="SUPERINTENDENTE").length} superint.`, "Consultores ativos","",{title:"Consultores ativos",items:cons},"Situação ATIVO ou APROVADO no ETV, função consultor, Dep. VENDAS")+
+    KPI(vCur, `${comCur.length} consultores venderam (${pct(comCur.length,cons.length)}) · semana ${CFG.semana}`, "Vendas no mês vigente "+mkLabelFull(CURK),"vg",{title:"Quem vendeu no mês vigente "+mkLabelFull(CURK),items:byV(comCur,CURK)},"Vendas validadas da base atual + histórico do mês vigente, atribuídas a consultores ativos")+
+    KPI(vPrev, `${comPrev.length} consultores venderam · ${f1(vPrev/Math.max(1,cons.filter(p=>activeInMonth(p,prevK)).length))} por consultor`, "Vendas em "+mkLabelFull(prevK)+" (mês fechado)","ok",{title:"Quem vendeu em "+mkLabelFull(prevK),items:byV(comPrev,prevK)},"Vendas do histórico com Mês Vigente "+mkLabelFull(prevK)+", de consultores ativos hoje")+
+    KPI(sem90.length, `${pct(sem90.length,cons.length)} dos consultores ativos`, "Consultores sem venda há 90+ dias","crit",{title:"Sem venda há 90+ dias",sub:"última venda validada há mais de 90 dias, ou nunca vendeu e entrou há mais de 90 dias",items:[...sem90].sort((a,b)=>(a.ult||a.entrada)-(b.ult||b.entrada))},"Última venda há mais de 90 dias, ou nunca vendeu e entrou há mais de 90 dias")+
+    KPI(nunca.length, `${recem.length} entraram há ≤ 90 dias`, "Consultores ativos que nunca venderam","crit",{title:"Nunca venderam",sub:"consultores ativos sem nenhuma venda validada atribuída",items:[...nunca].sort((a,b)=>(a.entrada||0)-(b.entrada||0))},"Nenhuma venda validada no histórico nem na base atual")+
+    KPI(pre, `${comPre.length} pessoas com proposta · ${STATS.base.naoAtrib} na base sem dono no ETV`, "Pré-vendas na esteira (base atual)","",{title:"Quem tem pré-venda na esteira",items:[...comPre].sort((a,b)=>b.pre.length-a.pre.length)},"Propostas da base atual em estágio que não é venda validada, troca, prestador, desistência ou validado em outra unidade");
 }
 
-function openDrawer(i){
+/* ================= CADEIA ================= */
+function cadField(level){ return level==="GERENTE"? ["gerente","gerente"] : level==="SUPERINTENDENTE"? ["gestor","sup"] : ["diretor","dir"]; }
+function buildEntities(level, nM){
+  const [sf,pf]=cadField(level); const endK=CURK-1, startK=CURK-nM; const ent={};
+  const get=name=>{ if(!name||name==="---") return null; return ent[name]||(ent[name]={name, mes:{}, pre:0, team:[], cons:0, coord:0, ent90:[], sai90:[], sales:[], salesByK:{}}); };
+  for(const r of SALES){ const e=get(r[sf]); if(!e) continue; e.mes[r.k2]=(e.mes[r.k2]||0)+1; (e.salesByK[r.k2]=e.salesByK[r.k2]||[]).push(r); if(r.k2>=startK) e.sales.push(r); }
+  for(const p of PEOPLE){ if(!p.team) continue; const e=get(p[pf]); if(!e) continue;
+    if(p.ativo){ e.team.push(p); if(p.nivel==="CONSULTOR") e.cons++; else e.coord++; e.pre+=p.pre.length; }
+    if(p.entrada&&days(p.entrada)<=90) e.ent90.push(p); if(!p.ativo&&p.saida&&days(p.saida)<=90) e.sai90.push(p);
+  }
+  for(const e of Object.values(ent)){
+    const cands=PEOPLE.filter(p=>p.time&&p.apTxt===e.name&&p.nivel===level).sort((a,b)=>(b.ativo-a.ativo)||((b.entrada||0)-(a.entrada||0)));
+    e.p=cands[0]||null; e.ativo=!!(e.p&&e.p.ativo);
+    e.sup = e.p? e.p.sup : (e.team[0]? e.team[0].sup : ""); e.dir = e.p? e.p.dir : (e.team[0]? e.team[0].dir : "");
+    e.wN=0; for(let k=startK;k<=endK;k++) e.wN+=(e.mes[k]||0);
+    e.cur=e.mes[CURK]||0; e.prev=e.mes[CURK-1]||0;
+    e.prodPrev = e.team.length? e.prev/e.team.length : null;
+    e.sem90L=e.team.filter(p=>p.sem90); e.nuncaL=e.team.filter(p=>!p.total);
+    e.turn = (e.team.length+e.sai90.length)? e.sai90.length/(e.team.length+e.sai90.length) : null;
+  }
+  return ent;
+}
+function renderCad(){
+  const level=$("#cNivel").value, onlyAct=$("#cSit").value==="ATIVO", fD=$("#cDir").value, fS=$("#cSup").value, q=normTxt($("#cQ").value), nM=+$("#cMeses").value;
+  const endK=CURK-1, startK=CURK-nM;
+  const ent=buildEntities(level,nM);
+  CVIEW=Object.values(ent).filter(e=>{
+    if(onlyAct && !(e.ativo||e.team.length)) return false;
+    if(fD && level!=="DIRETOR" && e.dir!==fD) return false; if(fD && level==="DIRETOR" && e.name!==fD) return false;
+    if(fS && level==="GERENTE" && e.sup!==fS) return false; if(fS && level==="SUPERINTENDENTE" && e.name!==fS) return false;
+    if(q && !normTxt(e.name+" "+(e.p?e.p.nome:"")).includes(q)) return false;
+    return true;
+  });
+  const kf={name:e=>e.name, sup:e=>e.sup, dir:e=>e.dir, team:e=>e.team.length, tot:e=>e.wN, cur:e=>e.cur, prod:e=>e.prodPrev??-1, pre:e=>e.pre, sem90:e=>e.team.length?e.sem90L.length/e.team.length:-1, nunca:e=>e.nuncaL.length, ent:e=>e.ent90.length, sai:e=>e.sai90.length, turn:e=>e.turn??-1, ciclo:e=>e.p&&e.p.ciclo?-e.p.ciclo.getTime():1};
+  const kfn=CSORT.k.startsWith("m:")?(k=>e=>e.mes[k]||0)(+CSORT.k.slice(2)):kf[CSORT.k];
+  CVIEW.sort((a,b)=>{ const x=kfn(a),y=kfn(b); return (x<y?-1:x>y?1:0)*CSORT.d || a.name.localeCompare(b.name); });
+  $("#cntCad").textContent=CVIEW.length;
+  const th=(k,lab,cls="")=>`<th class="${cls}${CSORT.k===k?' sorted':''}" data-k="${k}">${lab}${CSORT.k===k?'<span class="arr"> '+(CSORT.d>0?'▲':'▼')+'</span>':''}</th>`;
+  const lvlLab=level==="GERENTE"?"Gerente":level==="SUPERINTENDENTE"?"Superintendente":"Diretor";
+  let h="<tr>"+th("x","#","stk c0")+th("name",lvlLab,"l stk c1")+(level==="GERENTE"?th("sup","Superint.","l"):"")+(level!=="DIRETOR"?th("dir","Diretor","l"):"")+th("ciclo","Sit. · no cargo desde")+th("team","Time ativo<br>cons · coord");
+  for(let k=startK;k<=endK;k++) h+=th("m:"+k,mkLabel(k),"mon");
+  h+=th("tot","Total<br>"+nM+"m")+th("cur","Mês vigente<br>"+mkLabel(CURK),"cur")+th("prod","Vendas por<br>pessoa "+mkLabel(CURK-1))+th("pre","Esteira<br>pré-vendas")+th("sem90","Time sem venda<br>90+ dias")+th("nunca","Nunca<br>venderam")+th("ent","Entradas<br>90 d")+th("sai","Saídas<br>90 d")+th("turn","Turnover<br>90 d")+"</tr>";
+  $("#tblCad thead").innerHTML=h;
+  $("#tblCad thead").querySelectorAll("th").forEach(t=>t.onclick=()=>{ const k=t.dataset.k; if(k==="x") return; if(CSORT.k===k) CSORT.d=-CSORT.d; else { CSORT.k=k; CSORT.d=["name","sup","dir"].includes(k)?1:-1; } renderCad(); });
+  let rows=[], n=0;
+  for(const e of CVIEW){ n++; let cells="";
+    for(let k=startK;k<=endK;k++){ const v=e.mes[k]||0; cells+=`<td class="m"><span class="${v?'soft clk':'zero'}" ${v?L({kind:"sales",title:e.name+" — vendas "+mkLabelFull(k),items:e.salesByK[k]||[]}):""}>${v}</span></td>`; }
+    const sit=e.p? `<span class="badge ${e.p.sitTag==='ATIVO'?'at':e.p.sitTag==='INATIVO'?'in':'pd'}">${esc(e.p.sitTag)}</span>` : `<span class="badge in" title="não achei cadastro no ETV com este apelido e função">SEM ETV</span>`;
+    const since=e.p&&e.p.ciclo? `<br><span class="dim">${fmtD(e.p.ciclo)} · ${e.p.tempoCiclo}</span>`:"";
+    const turnCls=e.turn==null?"":e.turn>=0.5?"alert":e.turn>=0.3?"":"okt";
+    const nm=e.name;
+    rows.push(`<tr data-cad="${level}|${esc(nm)}">
+      <td class="dim num stk c0">${n}</td>
+      <td class="l ap stk c1">${esc(nm)}${e.p&&e.p.parceria?' <span class="badge pd" title="Gerente de parceria: o time são coordenadores de parceria">P</span>':''}<span class="nm">${esc(e.p?e.p.nome:"")}${e.p?" · "+esc(e.p.funcao):""}</span></td>
+      ${level==="GERENTE"?`<td class="l sm">${esc(e.sup||"—")}</td>`:""}${level!=="DIRETOR"?`<td class="l sm">${esc(e.dir||"—")}</td>`:""}
+      <td class="sm">${sit}${since}</td>
+      <td class="num clk" ${L({title:nm+" — time ativo",items:e.team})}><b>${e.team.length}</b><br><span class="dim">${e.cons} · ${e.coord}</span></td>
+      ${cells}
+      <td class="tot num clk" ${L({kind:"sales",title:nm+" — vendas dos últimos "+nM+" meses fechados",items:e.sales.filter(r=>r.k2<CURK)})}>${e.wN}</td>
+      <td class="m"><span class="cur ${e.cur?'clk':''}" ${e.cur?L({kind:"sales",title:nm+" — vendas no mês vigente "+mkLabelFull(CURK),items:e.salesByK[CURK]||[]}):""}>${e.cur}</span></td>
+      <td class="num">${e.prodPrev==null?"—":f1(e.prodPrev)}</td>
+      <td class="num ${e.pre?'clk':''}" ${e.pre?L({title:nm+" — quem tem pré-venda na esteira",items:e.team.filter(p=>p.pre.length).sort((a,b)=>b.pre.length-a.pre.length)}):""}>${e.pre||"—"}</td>
+      <td class="num ${e.team.length&&e.sem90L.length/e.team.length>=0.3?'alert':''} ${e.sem90L.length?'clk':''}" ${e.sem90L.length?L({title:nm+" — time sem venda há 90+ dias",items:e.sem90L}):""}>${e.team.length?e.sem90L.length+" ("+pct(e.sem90L.length,e.team.length)+")":"—"}</td>
+      <td class="num ${e.nuncaL.length?'clk':'dim'}" ${e.nuncaL.length?L({title:nm+" — nunca venderam",items:e.nuncaL}):""}>${e.nuncaL.length||"—"}</td>
+      <td class="num okt ${e.ent90.length?'clk':''}" ${e.ent90.length?L({title:nm+" — entradas nos últimos 90 dias",items:e.ent90}):""}>${e.ent90.length||"—"}</td>
+      <td class="num ${e.sai90.length?'alert clk':'dim'}" ${e.sai90.length?L({title:nm+" — saídas nos últimos 90 dias",items:e.sai90,opts:{saida:true}}):""}>${e.sai90.length||"—"}</td>
+      <td class="num ${turnCls} ${e.sai90.length?'clk':''}" ${e.sai90.length?L({title:nm+" — turnover 90 dias",two:[{title:"no time hoje",items:e.team},{title:"saíram em 90 dias",items:e.sai90}]}):""}>${e.turn==null?"—":pct(e.sai90.length,e.team.length+e.sai90.length)}</td></tr>`);
+  }
+  $("#tblCad tbody").innerHTML=rows.join("");
+  const sum=fn=>CVIEW.reduce((a,e)=>a+fn(e),0);
+  let f=`<tr><td class="stk c0"></td><td class="l stk c1">Total da seleção · ${CVIEW.length}</td>${level==="GERENTE"?"<td></td>":""}${level!=="DIRETOR"?"<td></td>":""}<td></td><td class="num">${sum(e=>e.team.length)}</td>`;
+  for(let k=startK;k<=endK;k++) f+=`<td class="num">${sum(e=>e.mes[k]||0)}</td>`;
+  const tteam=sum(e=>e.team.length), tsai=sum(e=>e.sai90.length);
+  f+=`<td class="num">${sum(e=>e.wN)}</td><td class="num">${sum(e=>e.cur)}</td><td class="num">${tteam?f1(sum(e=>e.prev)/tteam):"—"}</td><td class="num">${sum(e=>e.pre)}</td><td class="num">${sum(e=>e.sem90L.length)} (${pct(sum(e=>e.sem90L.length),tteam)})</td><td class="num">${sum(e=>e.nuncaL.length)}</td><td class="num">${sum(e=>e.ent90.length)}</td><td class="num">${tsai}</td><td class="num">${pct(tsai,tteam+tsai)}</td></tr>`;
+  $("#tblCad tfoot").innerHTML=f;
+  renderCadKpis(); renderTurnover(); renderDistrib();
+}
+function renderCadKpis(){
+  const team=PEOPLE.filter(p=>p.team);
+  const act=team.filter(p=>p.ativo);
+  const ent30=team.filter(p=>p.entrada&&days(p.entrada)<=30), sai30=team.filter(p=>!p.ativo&&p.saida&&days(p.saida)<=30);
+  const ent90=team.filter(p=>p.entrada&&days(p.entrada)<=90), sai90=team.filter(p=>!p.ativo&&p.saida&&days(p.saida)<=90);
+  const gerAtivos=PEOPLE.filter(p=>p.time&&p.ativo&&p.nivel==="GERENTE");
+  gerAtivos.forEach(gm=>{ const t=act.filter(p=>p.gerente===gm.apTxt); gm._team=t.length; gm._prev=0; gm._cur=0; });
+  const ger=buildEntities("GERENTE",3); gerAtivos.forEach(gm=>{ const e=ger[gm.apTxt]; if(e){ gm._prev=e.prev; gm._cur=e.cur; } });
+  const gerComTime=gerAtivos.filter(gm=>gm._team>0).length;
+  const semTime=gerAtivos.filter(gm=>!gm._team);
+  const small=gerAtivos.filter(gm=>gm._team>0&&gm._team<4);
+  const tmed=sai90.length? sai90.reduce((a,p)=>a+(p.entrada?days(p.entrada,p.saida):0),0)/sai90.length : null;
+  const semVenda=sai90.filter(p=>!p.total);
+  const curSales=SALES.filter(r=>r.k2===CURK);
+  $("#kpisCad").innerHTML=
+    KPI(act.length, `${gerAtivos.length} gerentes ativos · ${f1(act.length/Math.max(1,gerComTime))} pessoas por gerente com time`, "Time ativo (consultores + coordenadores)","",{title:"Time ativo",items:act},"Consultores e coordenadores com situação ATIVO/APROVADO no ETV")+
+    KPI(`+${ent30.length} / −${sai30.length}`, `saldo ${ent30.length-sai30.length>=0?"+":""}${ent30.length-sai30.length} · em 90 d: +${ent90.length} / −${sai90.length}`, "Entradas / saídas em 30 dias","ok",{title:"Entradas e saídas nos últimos 30 dias",two:[{title:"entraram",items:[...ent30].sort((a,b)=>b.entrada-a.entrada)},{title:"saíram",items:[...sai30].sort((a,b)=>b.saida-a.saida)}]},"Data de entrada / Data de Saída do ETV nos últimos 30 dias. Clique para ver as duas relações")+
+    KPI(pct(sai90.length,act.length+sai90.length), `${sai90.length} saídas sobre ${act.length+sai90.length} que passaram pelo time`, "Turnover 90 dias","crit",{title:"Turnover 90 dias",two:[{title:"no time hoje",items:act},{title:"saíram em 90 dias",items:[...sai90].sort((a,b)=>b.saida-a.saida)}]},"Saídas nos últimos 90 dias ÷ (ativos hoje + essas saídas)")+
+    KPI(tmed==null?"—":Math.round(tmed)+" dias", `${sai90.length} saíram em 90 d · ${semVenda.length} deles sem nenhuma venda (${pct(semVenda.length,sai90.length)})`, "Tempo médio de casa de quem saiu","crit",{title:"Quem saiu nos últimos 90 dias",sub:"tempo de casa = Data de Saída − Data de entrada",items:[...sai90].sort((a,b)=>days(a.entrada,a.saida)-days(b.entrada,b.saida)),opts:{saida:true}},"Média de (Data de Saída − Data de entrada) de quem saiu nos últimos 90 dias")+
+    KPI(semTime.length, `${small.length} gerentes com time de 1 a 3 pessoas`, "Gerentes ativos sem ninguém no time","",{kind:"entity",level:"GERENTE",title:"Gerentes ativos sem time",sub:"nenhum consultor ou coordenador ativo com este gerente no ETV",items:semTime},"Gerentes ATIVOS no ETV sem consultor nem coordenador ativo apontando para eles")+
+    KPI(curSales.length, `semana ${CFG.semana} · ${STATS.baseNovas} da base + ${curSales.filter(r=>r.src==="hist").length} do histórico`, "Vendas validadas no mês vigente "+mkLabelFull(CURK),"vg",{kind:"sales",title:"Vendas validadas no mês vigente "+mkLabelFull(CURK),items:curSales},"Todas as vendas validadas do mês vigente, inclusive as sem dono no ETV");
+}
+function renderTurnover(){
+  const team=PEOPLE.filter(p=>p.team);
+  const endK=mk(TODAY); let h=`<thead><tr><th class="l">Mês</th><th>Headcount início</th><th>Entradas</th><th>Saídas</th><th>Saldo</th><th>Headcount fim</th><th>Turnover</th><th class="l"></th></tr></thead><tbody>`;
+  const rows=[];
+  for(let k=endK-11;k<=endK;k++){
+    const y=Math.floor(k/12), m=k%12; const ini=new Date(y,m,1), fim=new Date(y,m+1,0);
+    const hcIni=team.filter(p=>p.entrada&&p.entrada<ini&&(p.ativo||!p.saida||p.saida>=ini));
+    const ent=team.filter(p=>p.entrada&&p.entrada>=ini&&p.entrada<=fim);
+    const sai=team.filter(p=>!p.ativo&&p.saida&&p.saida>=ini&&p.saida<=fim);
+    const hcFim=team.filter(p=>p.entrada&&p.entrada<=fim&&(p.ativo||!p.saida||p.saida>fim));
+    rows.push({k,hcIni,ent,sai,hcFim,turn:hcIni.length?sai.length/hcIni.length:null});
+  }
+  const mx=Math.max(1,...rows.map(r=>Math.max(r.ent.length,r.sai.length)));
+  for(const r of rows.reverse()){ const lb=mkLabelFull(r.k);
+    h+=`<tr><td class="l sg">${lb}${r.k===endK?' <span class="dim">(parcial)</span>':''}</td><td class="clk" ${L({title:"Headcount no início de "+lb,items:r.hcIni})}>${r.hcIni.length}</td><td class="okt clk" ${L({title:"Entradas em "+lb,items:[...r.ent].sort((a,b)=>a.entrada-b.entrada)})}>+${r.ent.length}</td><td class="alert clk" ${L({title:"Saídas em "+lb,items:[...r.sai].sort((a,b)=>a.saida-b.saida),opts:{saida:true}})}>−${r.sai.length}</td><td class="${r.ent.length-r.sai.length<0?'alert':'okt'}">${r.ent.length-r.sai.length>0?"+":""}${r.ent.length-r.sai.length}</td><td class="clk" ${L({title:"Headcount no fim de "+lb,items:r.hcFim})}><b>${r.hcFim.length}</b></td><td class="${r.turn!=null&&r.turn>=0.15?'alert':''}">${r.turn==null?"—":pct(r.sai.length,r.hcIni.length)}</td><td class="l"><span class="bar ok" style="width:${Math.round(60*r.ent.length/mx)}px"></span> <span class="bar red" style="width:${Math.round(60*r.sai.length/mx)}px"></span></td></tr>`;
+  }
+  $("#tblTurn").innerHTML=h+"</tbody>";
+  let s=`<thead><tr><th class="l">Turma (mês de entrada)</th><th>Entraram</th><th>Ativos hoje</th><th>30 d</th><th>60 d</th><th>90 d</th><th>180 d</th><th>Venderam ≥1</th><th>Nunca venderam e saíram</th></tr></thead><tbody>`;
+  for(let k=endK;k>=endK-11;k--){
+    const y=Math.floor(k/12), m=k%12; const ini=new Date(y,m,1), fim=new Date(y,m+1,0); const lb=mkLabelFull(k);
+    const t=team.filter(p=>p.entrada&&p.entrada>=ini&&p.entrada<=fim); if(!t.length) continue;
+    const surv=n=>{ const el=t.filter(p=>addD(p.entrada,n)<=TODAY); if(!el.length) return "—"; const al=el.filter(p=>p.ativo||!p.saida||p.saida>addD(p.entrada,n)); const v=al.length/el.length; return `<span class="${v<0.5?'alert':v>=0.75?'okt':''} clk" ${L({title:"Turma "+lb+" — ainda na casa após "+n+" dias",two:[{title:"ficaram",items:al},{title:"saíram antes de "+n+" dias",items:el.filter(p=>!al.includes(p))}]})}>${Math.round(100*v)}%</span>`; };
+    const vend=t.filter(p=>p.total>0), saiSem=t.filter(p=>!p.ativo&&!p.total);
+    s+=`<tr><td class="l sg clk" ${L({title:"Turma "+lb,sub:"consultores e coordenadores que entraram em "+lb,items:t})}>${lb}</td><td>${t.length}</td><td class="clk" ${L({title:"Turma "+lb+" — ativos hoje",items:t.filter(p=>p.ativo)})}><b>${t.filter(p=>p.ativo).length}</b> (${pct(t.filter(p=>p.ativo).length,t.length)})</td><td>${surv(30)}</td><td>${surv(60)}</td><td>${surv(90)}</td><td>${surv(180)}</td><td class="clk" ${L({title:"Turma "+lb+" — venderam ao menos 1",items:vend})}>${pct(vend.length,t.length)}</td><td class="${saiSem.length?'alert clk':''}" ${saiSem.length?L({title:"Turma "+lb+" — saíram sem vender",items:saiSem,opts:{saida:true}}):""}>${saiSem.length} (${pct(saiSem.length,t.length)})</td></tr>`;
+  }
+  $("#tblSurv").innerHTML=s+"</tbody>";
+  const d90=team.filter(p=>!p.ativo&&p.saida&&days(p.saida)<=90);
+  const mot={}; d90.forEach(p=>{ const m=p.obsDeslig||"(não informado)"; (mot[m]=mot[m]||[]).push(p); });
+  const ms=Object.entries(mot).sort((a,b)=>b[1].length-a[1].length).slice(0,10); const mxm=Math.max(1,...ms.map(x=>x[1].length));
+  const quem={}; d90.forEach(p=>{ const m=p.encerr||"(não informado)"; (quem[m]=quem[m]||[]).push(p); });
+  $("#motivos").innerHTML=`<table class="kv"><tbody>${ms.map(([m,arr])=>`<tr class="clk" ${L({title:"Saídas em 90 dias — "+m,items:arr,opts:{saida:true}})}><td class="k">${esc(m)}</td><td class="v"><b>${arr.length}</b> <span class="dim">(${pct(arr.length,d90.length)})</span></td><td class="b"><span class="bar" style="width:${Math.round(100*arr.length/mxm)}%"></span></td></tr>`).join("")}</tbody></table>
+    <div class="note"><span class="clk" ${L({title:"Desligamentos nos últimos 90 dias",items:d90,opts:{saida:true}})}><b>${d90.length}</b> desligamentos</span> nos últimos 90 dias. Quem encerrou: ${Object.entries(quem).sort((a,b)=>b[1].length-a[1].length).map(([k,v])=>`<span class="clk" ${L({title:"Encerrado por "+k,items:v,opts:{saida:true}})}>${esc(k)} ${v.length}</span>`).join(" · ")}. Tempo de casa mediano de quem saiu: <b>${d90.length?medianDays(d90):"—"}</b>.</div>`;
+}
+function medianDays(arr){ const v=arr.filter(p=>p.entrada).map(p=>days(p.entrada,p.saida)).sort((a,b)=>a-b); if(!v.length) return "—"; return v[Math.floor(v.length/2)]+" d"; }
+function renderDistrib(){
+  const act=PEOPLE.filter(p=>p.team&&p.ativo);
+  const byDir={}; act.forEach(p=>{ const d=p.dir||"—"; byDir[d]=byDir[d]||{n:0,cur:0,prev:0,sem90:[],ger:new Set(),ppl:[]}; const x=byDir[d]; x.n++; x.ppl.push(p); x.cur+=p.vMesAtual; x.prev+=(p.mes[CURK-1]||0); if(p.sem90) x.sem90.push(p); if(p.gerente) x.ger.add(p.gerente); });
+  const tc={}; act.forEach(p=>{ (tc[p.faixa]=tc[p.faixa]||[]).push(p); });
+  const tcs=Object.entries(tc).sort((a,b)=>a[0].localeCompare(b[0])); const mxt=Math.max(1,...tcs.map(x=>x[1].length));
+  $("#distrib").innerHTML=`<table class="sl"><thead><tr><th>Diretor</th><th>Time</th><th>Gerentes</th><th>Pessoas / gerente</th><th>Vendas ${mkLabel(CURK-1)}</th><th>Por pessoa</th><th>Mês vigente</th><th>Sem venda 90+ d</th></tr></thead><tbody>
+    ${Object.entries(byDir).sort((a,b)=>b[1].n-a[1].n).map(([d,x])=>`<tr><td class="sg clk" ${L({title:"Time do diretor "+d,items:x.ppl})}>${esc(d)}</td><td class="num">${x.n}</td><td class="num">${x.ger.size}</td><td class="num">${f1(x.n/Math.max(1,x.ger.size))}</td><td class="num">${x.prev}</td><td class="num">${f1(x.prev/x.n)}</td><td class="num">${x.cur}</td><td class="num ${x.sem90.length/x.n>=0.3?'alert':''} clk" ${L({title:d+" — sem venda há 90+ dias",items:x.sem90})}>${x.sem90.length} (${pct(x.sem90.length,x.n)})</td></tr>`).join("")}</tbody></table>
+    <h3 style="margin-top:12px">Tempo de casa do time ativo (calculado pela data de entrada) · clique na faixa</h3>
+    <table class="kv"><tbody>${tcs.map(([t,arr])=>`<tr class="clk" ${L({title:"Tempo de casa: "+t,items:arr})}><td class="k">${esc(t)}</td><td class="v"><b>${arr.length}</b> <span class="dim">(${pct(arr.length,act.length)})</span></td><td class="b"><span class="bar" style="width:${Math.round(100*arr.length/mxt)}%"></span></td></tr>`).join("")}</tbody></table>`;
+}
+
+/* ---------- fichas ---------- */
+function openFicha(i){
   const p=PEOPLE.find(x=>x.i===i); if(!p) return;
-  const inc=$("#fCur").checked;
-  const first = p.entrada? mk(p.entrada) : (p.vendas.length? Math.min(...p.vendas.map(v=>v.k)) : CURK);
-  const lastK = (!p.ativo && p.saida)? Math.max(mk(p.saida), p.vendas.length?Math.max(...p.vendas.map(v=>v.k)):0) : CURK;
-  let mons=""; for(let k=first;k<=lastK;k++){ const v=p.mes[k]||0; const lo=+$("#fLo").value, hi=+$("#fHi").value; const bg=v<=lo?"var(--vermelho)":v>=hi?"var(--ok)":"#fff"; const fg=(v<=lo||v>=hi)?"#fff":"var(--tinta)"; mons+=`<div style="background:${bg};color:${fg};border:1px solid #D8CFD1"><b>${v}</b>${mkLabel(k)}</div>`; }
-  const w3=windowStats(p,3,inc), w6=windowStats(p,6,inc), w12=windowStats(p,12,inc);
-  const fa=x=>x==null?"—":(Math.round(x*10)/10).toLocaleString("pt-BR");
-  const sales=[...p.vendas].sort((a,b)=>b.d-a.d);
+  const first = p.entrada? mk(p.entrada) : (p.vendas.length? Math.min(...p.vendas.map(v=>v.k2)) : CURK);
+  const lastK = (!p.ativo && p.saida)? Math.max(mk(p.saida), p.vendas.length?Math.max(...p.vendas.map(v=>v.k2)):0) : CURK;
+  const lo=+$("#fLo").value, hi=+$("#fHi").value;
+  let mons=""; for(let k=first;k<=lastK;k++){ const v=p.mes[k]||0; const isCur=k===CURK; const bg=isCur?"var(--amarelo-bg)":v<=lo?"var(--vermelho)":v>=hi?"var(--ok)":"#fff"; const fg=(!isCur&&(v<=lo||v>=hi))?"#fff":"var(--tinta)"; mons+=`<div style="background:${bg};color:${fg};border:1px solid ${isCur?'var(--amarelo-linha)':'#D8CFD1'}"><b>${v}</b>${mkLabel(k)}</div>`; }
+  const w3=windowStats(p,3), w6=windowStats(p,6), w12=windowStats(p,12);
+  const sales=[...p.vendas].sort((a,b)=>(b.k2-a.k2)||((b.d||0)-(a.d||0)));
   const tl=[
     ["Nome completo",p.nome||"—"],["CPF",p.cpf?p.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,"$1.$2.$3-$4"):"—"],
-    ["Situação",p.sitTag+(p.saida?" · saída "+fmtD(p.saida):"")+(p.obsDeslig?" · "+p.obsDeslig:"")],
-    ["Função atual",p.funcao],["Hierarquia",[p.gerente,p.sup,p.dir].filter(Boolean).join(" → ")||"—"],
+    ["Situação",p.sitTag+(p.saida?" · saída "+fmtD(p.saida):"")+(p.obsDeslig?" · "+p.obsDeslig:"")+(p.encerr?" · encerrado por "+p.encerr:"")],
+    ["Função atual",p.funcao],["Hierarquia (ETV hoje)",[p.gerente,p.sup,p.dir].filter(Boolean).join(" → ")||"—"],
     ["Entrada",fmtD(p.entrada)+" · tempo de casa "+p.tempoCasa],
     ["Ciclo atual",p.nivel==="CONSULTOR"?"consultor desde a entrada": fmtD(p.ciclo)+" · "+p.tempoCiclo+" · fonte: "+p.cicloFonte],
     ["Promoções lidas",[p.promoGer?"gerente em "+fmtD(p.promoGer):null,p.promoSup?"superintendente em "+fmtD(p.promoSup):null].filter(Boolean).join(" · ")||"nenhuma encontrada no histórico"],
-    ["Col. DATA QUE VIROU GERENTE",p.dtGerCol?fmtD(p.dtGerCol)+(p.entrada&&p.dtGerCol.getTime()===p.entrada.getTime()?" (= entrada, ignorada)":""):"—"],
-    ["Canal de captação",p.canal||"—"],["Tempo ativo (ETV)",p.tempoAtivoCol||"—"]
+    ["Faixa de tempo de casa",p.faixa]
   ];
-  $("#dr").innerHTML=`
-    <div class="hd"><div><h2>${esc(p.apelido||"—")} <span class="dim" style="font-family:Inter;font-weight:400;font-size:13px">${esc(p.nome)}</span></h2><div class="dim">${esc(p.funcao)} · ${esc(p.gerente||"")} / ${esc(p.sup||"")} / ${esc(p.dir||"")}</div></div><button class="x" id="drx">×</button></div>
+  openModal({title:`${esc(p.apelido||"—")} <span class="dim" style="font-family:Inter;font-weight:400;font-size:13px">${esc(p.nome)}</span>`, sub:`${esc(p.funcao)} · ${esc(p.gerente||"")} / ${esc(p.sup||"")} / ${esc(p.dir||"")}`, html:`
     <section><div class="grid4">
-      <div class="mini"><div class="v">${p.total}</div><div class="l">vendas validadas</div></div>
-      <div class="mini"><div class="v">${w3.v} <span style="font-size:12px;color:var(--grafite)">méd ${fa(w3.avg)}</span></div><div class="l">últimos 3 meses</div></div>
-      <div class="mini"><div class="v">${w6.v} <span style="font-size:12px;color:var(--grafite)">méd ${fa(w6.avg)}</span></div><div class="l">últimos 6 meses</div></div>
-      <div class="mini"><div class="v">${w12.v} <span style="font-size:12px;color:var(--grafite)">méd ${fa(w12.avg)}</span></div><div class="l">últimos 12 meses</div></div>
-      <div class="mini"><div class="v">${p.ult?days(p.ult)+"d":"—"}</div><div class="l">desde a última venda ${p.ult?fmtD(p.ult):""}</div></div>
+      <div class="mini ${sales.length?'clk':''}" ${sales.length?L({kind:"sales",title:p.apelido+" — vendas validadas",items:sales}):""}><div class="v">${p.total}</div><div class="l">vendas validadas</div></div>
+      <div class="mini"><div class="v">${w3.v} <span style="font-size:12px;color:var(--grafite)">méd ${f1(w3.avg)}</span></div><div class="l">últimos 3 meses fechados</div></div>
+      <div class="mini"><div class="v">${w6.v} <span style="font-size:12px;color:var(--grafite)">méd ${f1(w6.avg)}</span></div><div class="l">últimos 6 meses fechados</div></div>
+      <div class="mini"><div class="v">${w12.v} <span style="font-size:12px;color:var(--grafite)">méd ${f1(w12.avg)}</span></div><div class="l">últimos 12 meses fechados</div></div>
+      <div class="mini" style="background:var(--amarelo-bg)"><div class="v">${p.vMesAtual}</div><div class="l">mês vigente ${mkLabel(CURK)} · sem ${CFG.semana}</div></div>
       <div class="mini"><div class="v">${p.pre.length}</div><div class="l">pré-vendas na esteira</div></div>
-      <div class="mini"><div class="v">${p.vbase.length}</div><div class="l">vendas na base atual</div></div>
+      <div class="mini"><div class="v">${p.ult?days(p.ult)+"d":"—"}</div><div class="l">desde a última venda ${p.ult?fmtD(p.ult):""}</div></div>
       <div class="mini"><div class="v">${p.propria.length}</div><div class="l">compra própria</div></div>
     </div></section>
     <section><h3>Cadastro e ciclo</h3><div class="tl">${tl.map(([k,v])=>`<div class="k">${esc(k)}</div><div>${esc(v)}</div>`).join("")}</div></section>
     <section><h3>Histórico do prestador (texto ETV)</h3><div class="hist">${esc(p.hist||"—")}</div></section>
-    <section><h3>Vendas por mês desde a entrada</h3><div class="mons">${mons||"<span class='dim'>sem meses</span>"}</div></section>
-    <section><h3>Esteira — base atual (${p.pre.length+p.vbase.length})</h3>${(p.pre.length+p.vbase.length)?`<table class="sl"><thead><tr><th>Data</th><th>Cliente</th><th>Empreend.</th><th>Un.</th><th>Estágio</th><th>Status</th></tr></thead><tbody>${[...p.vbase,...p.pre].sort((a,b)=>(b.d||0)-(a.d||0)).map(s=>`<tr><td>${fmtD(s.d)}</td><td>${esc(s.cliente)}</td><td>${esc(s.emp)}</td><td>${esc(s.unidade)}</td><td style="color:${VENDA_EST.has(norm(s.est))?'var(--ok)':'var(--vinho)'};font-weight:600">${esc(s.est)}</td><td>${esc(s.status)}</td></tr>`).join("")}</tbody></table>`:'<span class="dim">nada na esteira</span>'}</section>
-    <section><h3>Vendas validadas (${sales.length})</h3>${sales.length?`<table class="sl"><thead><tr><th>Contrato</th><th>Cliente</th><th>Empreend.</th><th>Un.</th><th>Gerente</th><th>Gestor</th><th>Estágio</th></tr></thead><tbody>${sales.map(s=>`<tr><td>${fmtD(s.d)}</td><td>${esc(s.cliente)}</td><td>${esc(s.emp)}</td><td>${esc(s.unidade)}</td><td>${esc(s.gerente)}</td><td>${esc(s.gestor)}</td><td>${esc(s.est)}</td></tr>`).join("")}</tbody></table>`:'<span class="dim">nenhuma venda validada atribuída</span>'}</section>
-    ${p.propria.length?`<section><h3>Compra própria (prestador)</h3><table class="sl"><tbody>${p.propria.map(s=>`<tr><td>${fmtD(s.d)}</td><td>${esc(s.emp)}</td><td>${esc(s.unidade)}</td></tr>`).join("")}</tbody></table></section>`:""}`;
-  $("#dr").classList.add("open"); $("#ov").style.display="block";
-  $("#drx").onclick=closeDrawer;
+    <section><h3>Vendas por mês vigente desde a entrada</h3><div class="mons">${mons||"<span class='dim'>sem meses</span>"}</div></section>
+    <section><h3>Esteira — pré-vendas na base atual (${p.pre.length})</h3>${p.pre.length?`<table class="sl"><thead><tr><th>Contrato</th><th>Cliente</th><th>Empreend. · un.</th><th>Estágio</th><th>Status</th></tr></thead><tbody>${[...p.pre].sort((a,b)=>(b.d||0)-(a.d||0)).map(s=>`<tr><td>${fmtD(s.d)}</td><td>${esc(s.cliente)}</td><td>${esc(s.emp)} · ${esc(s.unidade)}</td><td style="color:var(--vinho);font-weight:600">${esc(s.est)}</td><td>${esc(s.status)}</td></tr>`).join("")}</tbody></table>`:'<span class="dim">nada na esteira</span>'}</section>
+    <section><h3>Vendas validadas (${sales.length})</h3>${sales.length?`<table class="sl"><thead><tr><th>Mês vig.</th><th>Contrato</th><th>Cliente</th><th>Empreend. · un.</th><th>Gerente</th><th>Superint.</th><th>Diretor</th><th>Fonte</th></tr></thead><tbody>${sales.map(s=>`<tr><td>${mkLabel(s.k2)}</td><td>${fmtD(s.d)}</td><td>${esc(s.cliente)}</td><td>${esc(s.emp)} · ${esc(s.unidade)}</td><td>${esc(s.gerente)}</td><td>${esc(s.gestor)}</td><td>${esc(s.diretor)}</td><td class="dim">${s.src==="base"?"base atual":"histórico"}</td></tr>`).join("")}</tbody></table>`:'<span class="dim">nenhuma venda validada atribuída</span>'}</section>
+    ${p.propria.length?`<section><h3>Compra própria (prestador)</h3><table class="sl"><tbody>${p.propria.map(s=>`<tr><td>${fmtD(s.d)}</td><td>${esc(s.emp)}</td><td>${esc(s.unidade)}</td></tr>`).join("")}</tbody></table></section>`:""}`});
 }
-function closeDrawer(){ $("#dr").classList.remove("open"); $("#ov").style.display="none"; }
-$("#ov").onclick=closeDrawer; document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
+function openCad(level,name){
+  const ent=buildEntities(level,+$("#cMeses").value); const e=ent[name]; if(!e) return;
+  const [sf,pf]=cadField(level);
+  const allTeam=PEOPLE.filter(p=>p.team&&p[pf]===name).sort((a,b)=>(b.ativo-a.ativo)||((b.entrada||0)-(a.entrada||0)));
+  const ks=Object.keys(e.mes).map(Number); const first=ks.length?Math.min(...ks):CURK;
+  let mons=""; for(let k=Math.max(first,CURK-23);k<=CURK;k++){ const v=e.mes[k]||0; const isCur=k===CURK; mons+=`<div class="${v?'clk':''}" ${v?L({kind:"sales",title:name+" — vendas "+mkLabelFull(k),items:e.salesByK[k]||[]}):""} style="background:${isCur?'var(--amarelo-bg)':v?'var(--rosa)':'#fff'};border:1px solid ${isCur?'var(--amarelo-linha)':'var(--rosa-linha)'}"><b>${v}</b>${mkLabel(k)}</div>`; }
+  const subLevel = level==="SUPERINTENDENTE"?"GERENTE": level==="DIRETOR"?"SUPERINTENDENTE": null;
+  let sub="";
+  if(subLevel){ const m={}; e.sales.forEach(r=>{ const key=subLevel==="GERENTE"?r.gerente:r.gestor; m[key]=m[key]||{n:0,cur:0,prev:0,rows:[]}; m[key].n++; m[key].rows.push(r); if(r.k2===CURK) m[key].cur++; if(r.k2===CURK-1) m[key].prev++; });
+    sub=`<section><h3>${subLevel==="GERENTE"?"Gerentes":"Superintendentes"} nas vendas do período · clique para a ficha</h3><table class="sl"><thead><tr><th>Nome</th><th>Vendas</th><th>${mkLabel(CURK-1)}</th><th>Mês vigente</th></tr></thead><tbody>${Object.entries(m).sort((a,b)=>b[1].n-a[1].n).map(([k,v])=>`<tr class="clk" data-cad="${subLevel}|${esc(k)}"><td><b>${esc(k||"—")}</b></td><td class="num">${v.n}</td><td class="num">${v.prev}</td><td class="num">${v.cur}</td></tr>`).join("")}</tbody></table></section>`; }
+  const vis=allTeam.filter(p=>p.ativo||(p.saida&&days(p.saida)<=180));
+  openModal({title:`${esc(name)} <span class="dim" style="font-family:Inter;font-weight:400;font-size:13px">${esc(e.p?e.p.nome:"")}</span>`, sub:`${esc(e.p?e.p.funcao:level)} · ${level==="GERENTE"?esc(e.sup)+" / ":""}${level!=="DIRETOR"?esc(e.dir):""}${e.p&&e.p.ciclo?" · no cargo desde "+fmtD(e.p.ciclo)+" ("+e.p.tempoCiclo+", fonte: "+esc(e.p.cicloFonte)+")":""}`, html:`
+    <section><div class="grid4">
+      <div class="mini clk" ${L({title:name+" — time ativo",items:e.team})}><div class="v">${e.team.length}</div><div class="l">time ativo · ${e.cons} cons · ${e.coord} coord</div></div>
+      <div class="mini ${e.prev?'clk':''}" ${e.prev?L({kind:"sales",title:name+" — vendas "+mkLabelFull(CURK-1),items:e.salesByK[CURK-1]||[]}):""}><div class="v">${e.prev}</div><div class="l">vendas ${mkLabel(CURK-1)} · ${f1(e.prodPrev)} por pessoa</div></div>
+      <div class="mini ${e.cur?'clk':''}" ${e.cur?L({kind:"sales",title:name+" — vendas no mês vigente",items:e.salesByK[CURK]||[]}):""} style="background:var(--amarelo-bg)"><div class="v">${e.cur}</div><div class="l">mês vigente ${mkLabel(CURK)} · sem ${CFG.semana}</div></div>
+      <div class="mini ${e.pre?'clk':''}" ${e.pre?L({title:name+" — quem tem pré-venda",items:e.team.filter(p=>p.pre.length)}):""}><div class="v">${e.pre}</div><div class="l">pré-vendas na esteira</div></div>
+      <div class="mini ${e.ent90.length?'clk':''}" ${e.ent90.length?L({title:name+" — entradas 90 d",items:e.ent90}):""}><div class="v">${e.ent90.length}</div><div class="l">entradas 90 d</div></div>
+      <div class="mini ${e.sai90.length?'clk':''}" ${e.sai90.length?L({title:name+" — saídas 90 d",items:e.sai90,opts:{saida:true}}):""}><div class="v" style="color:var(--vermelho)">${e.sai90.length}</div><div class="l">saídas 90 d</div></div>
+      <div class="mini"><div class="v">${e.turn==null?"—":pct(e.sai90.length,e.team.length+e.sai90.length)}</div><div class="l">turnover 90 d</div></div>
+      <div class="mini ${e.sem90L.length?'clk':''}" ${e.sem90L.length?L({title:name+" — sem venda há 90+ dias",items:e.sem90L}):""}><div class="v">${e.sem90L.length}</div><div class="l">do time sem venda 90+ d</div></div>
+    </div></section>
+    <section><h3>Vendas por mês vigente (coluna ${level==="GERENTE"?"GERENTE":level==="SUPERINTENDENTE"?"GESTOR":"DIRETOR"} da venda) · clique no mês</h3><div class="mons">${mons}</div></section>
+    ${sub}
+    <section><h3>Time hoje e quem saiu nos últimos 180 dias (ETV: ${pf==="gerente"?"Gerente":pf==="sup"?"Superint.":"Diretor"} = ${esc(name)}) · ${vis.length}</h3>${peopleTable(vis,{saida:true})}</section>`});
+}
 
 function exportCsv(){
-  const nM=+$("#fMeses").value, startK=CURK-nM+1;
-  const head=["Diretor","Superint","Gerente","Apelido","Nome","CPF","Funcao","Situacao","Entrada","Saida","TempoCasa","CicloAtualDesde","CicloFonte"]; for(let k=startK;k<=CURK;k++) head.push(mkLabelFull(k));
-  head.push("Total"+nM+"m","TotalGeral","UltimaVenda","DiasSemVenda","EsteiraPre","EsteiraVendas","Ult3Vendas","Ult3Media","Ult6Vendas","Ult6Media");
+  const nM=+$("#fMeses").value, startK=CURK-nM;
+  const head=["Diretor","Superint","Gerente","Apelido","Nome","CPF","Funcao","Situacao","Entrada","Saida","TempoCasa"]; for(let k=startK;k<CURK;k++) head.push(mkLabelFull(k));
+  head.push("Total"+nM+"m","TotalGeral","MesVigente_"+mkLabelFull(CURK)+"_sem"+CFG.semana,"UltimaVenda","DiasSemVenda","EsteiraPre","Ult3Vendas","Ult3Media","Ult6Vendas","Ult6Media");
   const lines=[head.join(";")];
   for(const p of VIEW){
-    const r=[p.dir,p.sup,p.gerente,p.apelido,p.nome,p.cpf,p.funcao,p.sitTag,fmtD(p.entrada),p.saida?fmtD(p.saida):"",p.tempoCasa,p.ciclo?fmtD(p.ciclo):"",p.cicloFonte];
-    for(let k=startK;k<=CURK;k++) r.push(activeInMonth(p,k)?(p.mes[k]||0):"");
-    r.push(p.wN,p.total,p.ult?fmtD(p.ult):"",p.ult?days(p.ult):"",p.pre.length,p.vbase.length,p.w3.v,p.w3.avg==null?"":p.w3.avg.toFixed(2).replace(".",","),p.w6.v,p.w6.avg==null?"":p.w6.avg.toFixed(2).replace(".",","));
+    const r=[p.dir,p.sup,p.gerente,p.apelido,p.nome,p.cpf,p.funcao,p.sitTag,fmtD(p.entrada),p.saida?fmtD(p.saida):"",p.tempoCasa];
+    for(let k=startK;k<CURK;k++) r.push(activeInMonth(p,k)?(p.mes[k]||0):"");
+    r.push(p.wN,p.total,p.vMesAtual,p.ult?fmtD(p.ult):"",p.ult?days(p.ult):"",p.pre.length,p.w3.v,p.w3.avg==null?"":p.w3.avg.toFixed(2).replace(".",","),p.w6.v,p.w6.avg==null?"":p.w6.avg.toFixed(2).replace(".",","));
     lines.push(r.map(x=>'"'+String(x??"").replace(/"/g,'""')+'"').join(";"));
   }
   const blob=new Blob(["﻿"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="time_vendas_"+fmtD(TODAY).replace(/\//g,"-")+".csv"; a.click();
 }
-$("#btnCsv").onclick=exportCsv;
-$("#btnReload").onclick=()=>location.reload();
 
 function renderFoot(){
-  const s=STATS; const ex=Object.entries(s.hist.naoAtribEx).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>`${esc(k)} (${v})`).join(", ");
+  const s=STATS; const hs=RAW.hist.st, bs=RAW.base.st;
+  const ex=Object.entries(hs.naoAtribEx).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([k,v])=>`${esc(k)} (${v})`).join(", ");
   $("#foot").innerHTML=`<b>Metodologia.</b> Time de vendas = ETV com Dep. "VENDAS" e função sem "ASSISTENTE"/"ANALISTA" (${PEOPLE.filter(p=>p.time).length} cadastros, ${PEOPLE.filter(p=>p.time&&p.ativo).length} ativos).
-  Venda = estágio "VENDA - SV - VALIDADO CEF (SV)" ou "VENDA - SV - VALIDADO DIRETO/NR (SV)", pela DATA DE CONTRATO ANAPRO (não usa Mês Vigente). "TROCA - CLUBE IPIRANGA" descartada (${s.hist.troca}); "METROCASA PRESTADORES - SV VALIDADO" contada à parte como compra própria (${s.hist.propria}).
-  Dono da venda: VENDEDOR(A) = APELIDO (sem acento, sem *) e data de contrato ≥ Data de entrada; com apelidos repetidos, vale a pessoa com a entrada mais recente anterior à venda.
-  Histórico: ${s.hist.total} linhas, ${s.hist.venda} vendas atribuídas, ${s.hist.naoAtrib} sem dono no ETV (${ex}), ${s.hist.semData} sem data válida.
-  Base atual: ${s.base.total} linhas · ${s.base.venda} vendas validadas · ${s.base.pre} pré-vendas (todo estágio que não é venda, troca, prestador ou desistência, incluindo "---" e "VALIDADO EM OUTRA UNIDADE") · ${s.base.desist} desistências e ${s.base.troca} trocas descartadas · ${s.base.naoAtrib} sem dono.
-  Ciclo atual de gerentes/superintendentes: data de "PROMOVIDO(A) A …" lida do HISTÓRICO DO PRESTADOR; se ausente, usa a coluna DATA QUE VIROU GERENTE apenas quando difere da entrada (para consultores essa coluna repete a entrada e é ignorada).
-  Médias: vendas ÷ meses em que a pessoa estava na casa dentro da janela (mês de entrada até mês de saída); "(2m)" indica janela incompleta. Meses antes da entrada ou após a saída aparecem hachurados.`;
+  Venda = estágio "VENDA - SV - VALIDADO CEF (SV)" ou "VENDA - SV - VALIDADO DIRETO/NR (SV)". "TROCA - CLUBE IPIRANGA" descartada (${hs.troca}); "METROCASA PRESTADORES - SV VALIDADO" contada à parte como compra própria (${hs.propria}).
+  <b>Eixo de tempo = Mês Vigente</b> do histórico (${mkLabelFull(hs.minK)} a ${mkLabelFull(hs.maxK)}). A base atual inteira é tratada como o mês vigente configurado (${mkLabelFull(CURK)}, semana ${CFG.semana}); vendas que já estão no histórico com o mesmo Mês Vigente são unidas pela CHAVE sem duplicar (${s.histCurDup} repetidas, ${s.baseNovas} novas da base).
+  Dono da venda: VENDEDOR(A) = APELIDO (sem acento, sem *) e data de contrato ≥ Data de entrada; com apelidos repetidos vale a pessoa de entrada mais recente anterior à venda.
+  Histórico: ${hs.total} linhas, ${hs.venda} vendas, ${hs.naoAtrib} sem dono no ETV (${ex}), ${hs.semMes} sem Mês Vigente.
+  Base atual: ${bs.total} linhas · ${bs.venda} vendas validadas · ${bs.pre} pré-vendas (todo estágio que não é venda, troca, prestador, desistência ou "VALIDADO EM OUTRA UNIDADE", incluindo "---") · descartadas: ${bs.desist} desistências, ${bs.troca} trocas, ${bs.outraUnid} validadas em outra unidade · ${bs.naoAtrib} sem dono.
+  Ciclo atual de gerentes/superintendentes: data de "PROMOVIDO(A) A …" lida do HISTÓRICO DO PRESTADOR; se ausente, a coluna DATA QUE VIROU GERENTE só quando difere da entrada.
+  Médias: vendas ÷ meses fechados em que a pessoa estava na casa dentro da janela; "(2m)" indica janela incompleta. Meses antes da entrada ou após a saída aparecem hachurados.`;
+  $("#footCad").innerHTML=`<b>Cadeia.</b> As vendas de gerente, superintendente e diretor vêm das colunas GERENTE, GESTOR e DIRETOR (coluna "22" no histórico) da própria venda, com o sufixo "(G)/(P)/(B)" removido, por isso refletem a estrutura da época da venda. O time (consultores e coordenadores de parceria), as entradas e as saídas vêm do ETV de hoje (coluna Gerente / Superint. / Diretor de cada pessoa). "SEM ETV" = o nome aparece nas vendas, mas não existe cadastro com esse apelido e essa função no ETV. Turnover 90 d = saídas nos últimos 90 dias ÷ (ativos hoje + essas saídas). Vendas por pessoa = vendas do mês fechado anterior ÷ time ativo hoje.`;
 }
 
 /* ---------- boot ---------- */
 (async function(){
   const prog={etv:[0,0],hist:[0,0],base:[0,0]};
-  const upd=()=>{ const got=Object.values(prog).reduce((a,x)=>a+x[0],0); const est=Math.max(Object.values(prog).reduce((a,x)=>a+(x[1]||0),0), 40e6); $("#pbar").style.width=Math.min(100,100*got/est)+"%"; };
+  const upd=()=>{ const got=Object.values(prog).reduce((a,x)=>a+x[0],0); const est=Math.max(Object.values(prog).reduce((a,x)=>a+(x[1]||0),0), 40e6); const p=Math.min(99,Math.round(100*got/est)); $("#pbar").style.width=p+"%"; $("#spct").textContent=p+"%"; };
   try{
     const [e,h,b]=await Promise.all(["etv","hist","base"].map(k=>fetchCSV(k,(g,t)=>{prog[k]=[g,t];upd();})));
-    $("#pbar").style.width="100%";
+    $("#pbar").style.width="100%"; $("#spct").textContent="100%"; $("#smsg").textContent="Cruzando estrutura, vendas e esteira…";
+    await new Promise(r=>setTimeout(r,30));
     const etv=parseCSV(e.txt), hist=parseCSV(h.txt), base=parseCSV(b.txt);
     PEOPLE=buildPeople(etv);
     const resolve=makeResolver(PEOPLE);
-    STATS.hist=buildSales(hist,resolve); STATS.base=buildBase(base,resolve);
-    PEOPLE.forEach(derive);
-    $("#loadedAt").textContent=new Date().toLocaleString("pt-BR");
-    $("#srcInfo").innerHTML=`ETV ${etv.length-1} · histórico ${hist.length-1} · base ${base.length-1}` + ((e.live&&h.live&&b.live)?' · <span style="color:var(--ok)">ao vivo</span>':' · <span class="alert">parcialmente do cache</span>');
-    initFilters(); render(); renderFoot();
+    RAW.hist=buildSales(hist,resolve); RAW.base=buildBase(base,resolve);
+    STATS.hist=RAW.hist.st; STATS.base=RAW.base.st;
+    LOAD={etv:e.live,hist:h.live,base:b.live,at:new Date().toLocaleString("pt-BR"),n_etv:etv.length-1,n_hist:hist.length-1,n_base:base.length-1};
+    loadCfg(); applyPeriod();
+    initFilters(); renderAll();
     $("#status").style.display="none"; document.querySelector("main").style.display="block";
+    if(CFG.auto) openCfg();
   }catch(err){
-    $("#serr").innerHTML='<div class="err"><b>Não foi possível carregar.</b> '+esc(err.message)+'<br>Se abriu como arquivo local, o navegador pode bloquear a leitura do Google Sheets. Tente abrir pelo Edge/Chrome ou servir a pasta por http.</div>';
+    $("#smsg").textContent="Não foi possível carregar.";
+    $("#serr").innerHTML='<div class="err"><b>Erro:</b> '+esc(err.message)+'<br>Se abriu como arquivo local, o navegador pode bloquear a leitura do Google Sheets. Tente abrir pelo Edge/Chrome ou servir a pasta por http.</div>';
+    console.error(err);
   }
 })();
-</script>
-</body>
-</html>
+</script><div id="booster_root"><template shadowrootmode="open"><div><!----><style>.app-root[data-v-1850b6c5]{position:fixed;bottom:20px;right:20px;z-index:1000000;padding:16px 22px;border-radius:14px;background:rgba(33,42,88,.5);backdrop-filter:blur(4px);transition:opacity .2s ease;opacity:.1;color:#fff;font-family:sans-serif;font-size:14px}.app-root[data-v-1850b6c5]:hover,.app-root.highlight[data-v-1850b6c5]{opacity:1;transition-delay:0s}
+</style></div></template></div>
+
+
+</body></html>
